@@ -1,47 +1,99 @@
 package com.zhiw.gankapp.ui.Activity;
 
 import com.zhiw.gankapp.R;
+import com.zhiw.gankapp.app.BaseActivity;
+import com.zhiw.gankapp.ui.Fragment.MainFragment;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
+
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+    @Bind(R.id.tab_layout)
+    TabLayout mTabLayout;
+    @Bind(R.id.view_pager)
+    ViewPager mViewPager;
+    @Bind(R.id.fab)
+    FloatingActionButton mFab;
+    @Bind(R.id.nav_view)
+    NavigationView mNavView;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
+    private List<android.support.v4.app.Fragment> mFragmentList;
+    private String[] titles = {"福利", "Android", "iOS", "前端","休息视频"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        init();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void init() {
+        mFab.setOnClickListener(v -> Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+        mNavView.setNavigationItemSelectedListener(this);
+
+        mFragmentList = new ArrayList<>();
+        for (String title : titles) {
+            mFragmentList.add(MainFragment.newInstance(title));
+        }
+
+        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public android.support.v4.app.Fragment getItem(int position) {
+                return mFragmentList.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return mFragmentList.size();
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return titles[position];
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        mTabLayout.setupWithViewPager(mViewPager);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initPresenter() {
+
     }
 
     @Override
