@@ -16,6 +16,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -56,10 +59,16 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getString(ARG_PARAM);
-            Logger.d(type);
+            Logger.d(type + "+++++++++onCreate");
         }
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Logger.d(type + "+++++++++++++onCreateView");
+        return super.onCreateView(inflater, container, savedInstanceState);
+
+    }
 
     @Override
     protected int getLayoutResId() {
@@ -81,10 +90,10 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
             meizhiAdapter = new MeizhiAdapter(fragmentActivity);
             mRecyclerView.setAdapter(meizhiAdapter);
             mPresenter.getMeizhi();
-        }else {
-            LinearLayoutManager linearLayoutManager=new LinearLayoutManager(fragmentActivity,LinearLayoutManager.VERTICAL,false);
+        } else {
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity, LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            gankAdapter=new GankAdapter(fragmentActivity,null);
+            gankAdapter = new GankAdapter(fragmentActivity, null);
             mRecyclerView.setAdapter(gankAdapter);
             mPresenter.getGank(type);
         }

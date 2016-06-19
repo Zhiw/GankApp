@@ -32,7 +32,7 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
                     Logger.d("success");
-                    view.showListView(gankData.getResults());
+                    viewImpl.showListView(gankData.getResults());
                 });
 
 
@@ -45,7 +45,7 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
-                    view.refreshGankList(gankData.getResults());
+                    viewImpl.refreshGankList(gankData.getResults());
 
                 });
     }

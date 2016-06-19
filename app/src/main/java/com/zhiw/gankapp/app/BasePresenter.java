@@ -12,14 +12,14 @@ public class BasePresenter<T extends BaseView> {
 
     public Context context;
 
-    public T view;
+    public T viewImpl;
 
     public BasePresenter(Context context, T view) {
         this.context = context;
-        this.view = view;
+        this.viewImpl = view;
     }
 
     public void init(){
-        view.initView();
+        viewImpl.initView();
     }
 }

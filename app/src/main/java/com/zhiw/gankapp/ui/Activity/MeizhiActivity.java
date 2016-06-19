@@ -4,34 +4,33 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.zhiw.gankapp.R;
-import com.zhiw.gankapp.app.BaseActivity;
+import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.presenter.MeizhiPresenter;
 import com.zhiw.gankapp.ui.View.MeizhiView;
+import com.zhiw.gankapp.utils.DateUtil;
+import com.zhiw.gankapp.utils.SnackbarUtil;
 
 import android.graphics.Bitmap;
-import android.os.Build;
-import android.support.design.widget.AppBarLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import butterknife.Bind;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class MeizhiActivity extends BaseActivity implements MeizhiView {
+public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     @Bind(R.id.meizhi)
     ImageView mMeizhi;
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
-    @Bind(R.id.app_bar)
-    AppBarLayout mAppBar;
 
     MeizhiPresenter mPresenter;
     PhotoViewAttacher mAttacher;
+    private Bitmap mBitmap;
+
+    private String date;
 
 
     @Override
@@ -48,14 +47,9 @@ public class MeizhiActivity extends BaseActivity implements MeizhiView {
 
     @Override
     public void initView() {
-        String url = getIntent().getStringExtra(Constants.MEIZHI);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mToolbar.setNavigationIcon(getDrawable(R.drawable.ic_arrow_back));
-        }
-        mToolbar.setNavigationOnClickListener(view -> finish());
+        String url = getIntent().getStringExtra(Constants.URL);
+        date = DateUtil.parseDate(getIntent().getStringExtra(Constants.DATE));
 
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         mAttacher = new PhotoViewAttacher(mMeizhi);
         Glide.with(this)
                 .load(url)
@@ -65,19 +59,48 @@ public class MeizhiActivity extends BaseActivity implements MeizhiView {
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                         mMeizhi.setImageBitmap(resource);
                         mAttacher.update();
+                        mBitmap = resource;
                     }
                 });
+
+        mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+            @Override
+            public void onPhotoTap(View view, float v, float v1) {
+                hideOrShowToolBar();
+            }
+
+            @Override
+            public void onOutsidePhotoTap() {
+                hideOrShowToolBar();
+
+            }
+        });
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_meizhi,menu);
+        getMenuInflater().inflate(R.menu.menu_meizhi, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                mPresenter.saveImage(mBitmap, date);
+                break;
+            case R.id.action_share:
+                mPresenter.shareImage(mBitmap, date);
+                break;
+
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showImageResult(String text) {
+        SnackbarUtil.showSnackbar(mMeizhi, text);
+
     }
 }

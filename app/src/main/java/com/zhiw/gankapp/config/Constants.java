@@ -15,5 +15,9 @@ public class Constants {
 
     public static final String TYPE_IOS="iOS";
 
-    public static final String MEIZHI="meizhi";
+    public static final String URL ="url";
+
+    public static final String DES ="des";
+
+    public static final String DATE ="date";
 }

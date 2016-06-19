@@ -1,10 +1,14 @@
 package com.zhiw.gankapp.adapter;
 
 import com.zhiw.gankapp.R;
+import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
+import com.zhiw.gankapp.ui.Activity.WebViewActivity;
 import com.zhiw.gankapp.utils.DateUtil;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +20,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * ClassName: GankAdapter
@@ -25,10 +30,10 @@ import butterknife.ButterKnife;
 public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder> {
 
     private List<Gank> mList;
-    private Context mContext;
+    private Context context;
 
     public GankAdapter(Context context, List<Gank> list) {
-        mContext = context;
+        this.context = context;
         if (list == null) {
             list = new ArrayList<>();
         }
@@ -43,7 +48,8 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
     @Override
     public void onBindViewHolder(GankViewHolder holder, int position) {
-        Gank gank=mList.get(position);
+        Gank gank = mList.get(position);
+        holder.view.setTag(gank);
         holder.mTitle.setText(gank.getDesc());
         holder.mWho.setText(gank.getWho());
         holder.mDate.setText(DateUtil.parseDate(gank.getPublishedAt()));
@@ -55,13 +61,16 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         return mList.size();
     }
 
-    public void refreshData(List<Gank> list){
+    public void refreshData(List<Gank> list) {
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
     }
 
+
     class GankViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.card_view)
+        CardView mCardView;
         @Bind(R.id.title)
         TextView mTitle;
         @Bind(R.id.who)
@@ -69,9 +78,22 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         @Bind(R.id.date)
         TextView mDate;
 
+        View view;
+
         public GankViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            view = itemView;
+            ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.card_view)
+        public void onClick() {
+            Intent intent = new Intent(context, WebViewActivity.class);
+            intent.putExtra(Constants.URL, ((Gank) view.getTag()).getUrl());
+            intent.putExtra(Constants.DES,((Gank) view.getTag()).getDesc());
+            context.startActivity(intent);
+
+        }
+
     }
 }

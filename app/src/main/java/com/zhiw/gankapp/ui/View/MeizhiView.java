@@ -9,4 +9,6 @@ import com.zhiw.gankapp.app.BaseView;
  */
 public interface MeizhiView extends BaseView {
 
+    void showImageResult(String text);
+
 }

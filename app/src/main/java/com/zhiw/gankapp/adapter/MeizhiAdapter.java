@@ -7,8 +7,11 @@ import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.ui.Activity.MeizhiActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,8 +88,12 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
         @OnClick(R.id.imageView)
         public void onClick() {
             Intent intent = new Intent(context, MeizhiActivity.class);
-            intent.putExtra(Constants.MEIZHI, ((Gank) view.getTag()).getUrl());
-            context.startActivity(intent);
+            intent.putExtra(Constants.URL, ((Gank) view.getTag()).getUrl());
+            intent.putExtra(Constants.DATE, ((Gank) view.getTag()).getPublishedAt());
+
+            ActivityOptionsCompat optionsCompat=ActivityOptionsCompat
+                    .makeSceneTransitionAnimation((Activity)context,mImageView,context.getString(R.string.transition));
+            ActivityCompat.startActivity((Activity)context,intent,optionsCompat.toBundle());
         }
 
     }
