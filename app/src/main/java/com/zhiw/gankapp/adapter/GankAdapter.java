@@ -67,6 +67,11 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         notifyDataSetChanged();
     }
 
+    public void addData(List<Gank> list) {
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
 
     class GankViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.card_view)

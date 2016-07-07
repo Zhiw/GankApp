@@ -72,6 +72,11 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
 
     }
 
+    public void addData(List<Gank> list){
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.imageView)

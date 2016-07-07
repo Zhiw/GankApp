@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface MainFragmentView extends BaseView {
 
+    void showProgress(boolean show);
+
     void showListView(List<Gank> list);
 
     void refreshGankList(List<Gank> list);

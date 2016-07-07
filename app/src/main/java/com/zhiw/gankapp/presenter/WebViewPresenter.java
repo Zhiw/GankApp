@@ -1,11 +1,12 @@
 package com.zhiw.gankapp.presenter;
 
 import com.zhiw.gankapp.app.BasePresenter;
-import com.zhiw.gankapp.ui.View.WebView;
+import com.zhiw.gankapp.ui.View.IWebView;
 
 import android.content.Context;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 /**
@@ -13,8 +14,8 @@ import android.webkit.WebViewClient;
  * Desc:
  * Created by zhiw on 16/6/16.
  */
-public class WebViewPresenter extends BasePresenter<WebView> {
-    public WebViewPresenter(Context context, WebView view) {
+public class WebViewPresenter extends BasePresenter<IWebView> {
+    public WebViewPresenter(Context context, IWebView view) {
         super(context, view);
     }
 
@@ -29,6 +30,11 @@ public class WebViewPresenter extends BasePresenter<WebView> {
         webView.setWebViewClient(new MyWebViewClient());
         webView.setWebChromeClient(new MyWebChromeClient());
         webView.loadUrl(url);
+    }
+
+    public void refresh(WebView webView){
+        webView.reload();
+
     }
 
     class MyWebViewClient extends WebViewClient{

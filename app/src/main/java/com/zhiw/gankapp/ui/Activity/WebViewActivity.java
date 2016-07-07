@@ -5,13 +5,14 @@ import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.presenter.WebViewPresenter;
-import com.zhiw.gankapp.ui.View.WebView;
+import com.zhiw.gankapp.ui.View.IWebView;
 
 import android.view.Menu;
+import android.view.MenuItem;
 
 import butterknife.Bind;
 
-public class WebViewActivity extends ToolBarActivity implements WebView {
+public class WebViewActivity extends ToolBarActivity implements IWebView {
 
     @Bind(R.id.web_view)
     android.webkit.WebView mWebView;
@@ -47,6 +48,15 @@ public class WebViewActivity extends ToolBarActivity implements WebView {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_refresh:
+                mPresenter.refresh(mWebView);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void showProgress(int progress) {

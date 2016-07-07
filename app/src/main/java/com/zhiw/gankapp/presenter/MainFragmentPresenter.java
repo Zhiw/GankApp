@@ -24,27 +24,29 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
         super(context, view);
     }
 
-    public void getMeizhi(){
+    public void getMeizhi(int page){
         GankRetrofit.getRetrofit()
                 .create(GankService.class)
-                .getGank(Constants.TYPE_MEIZHI,10,1)
+                .getGank(Constants.TYPE_MEIZHI,10,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
                     Logger.d("success");
+                    viewImpl.showProgress(false);
                     viewImpl.showListView(gankData.getResults());
                 });
 
 
     }
 
-    public void getGank(String type){
+    public void getGank(String type,int page){
         GankRetrofit.getRetrofit()
                 .create(GankService.class)
-                .getGank(type,10,1)
+                .getGank(type,10,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
+                    viewImpl.showProgress(false);
                     viewImpl.refreshGankList(gankData.getResults());
 
                 });
