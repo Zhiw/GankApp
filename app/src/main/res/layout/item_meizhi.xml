@@ -14,8 +14,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:maxHeight="300dp"
-            android:minHeight="200dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:transitionName="@string/transition"
     />
 

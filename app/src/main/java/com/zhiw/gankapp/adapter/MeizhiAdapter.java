@@ -72,7 +72,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
 
     }
 
-    public void addData(List<Gank> list){
+    public void addData(List<Gank> list) {
         mList.addAll(list);
         notifyDataSetChanged();
     }
@@ -96,9 +96,9 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
             intent.putExtra(Constants.URL, ((Gank) view.getTag()).getUrl());
             intent.putExtra(Constants.DATE, ((Gank) view.getTag()).getPublishedAt());
 
-            ActivityOptionsCompat optionsCompat=ActivityOptionsCompat
-                    .makeSceneTransitionAnimation((Activity)context,mImageView,context.getString(R.string.transition));
-            ActivityCompat.startActivity((Activity)context,intent,optionsCompat.toBundle());
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation((Activity) context, mImageView, context.getString(R.string.transition));
+            ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
         }
 
     }
