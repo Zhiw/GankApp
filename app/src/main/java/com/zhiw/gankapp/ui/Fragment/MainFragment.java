@@ -1,10 +1,11 @@
 package com.zhiw.gankapp.ui.Fragment;
 
 
+import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.adapter.GankAdapter;
 import com.zhiw.gankapp.adapter.MeizhiAdapter;
-import com.zhiw.gankapp.app.BaseFragment;
+import com.zhiw.gankapp.app.BaseTabFragment;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.presenter.MainFragmentPresenter;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends BaseFragment implements MainFragmentView, SwipeRefreshLayout.OnRefreshListener {
+public class MainFragment extends BaseTabFragment implements MainFragmentView, SwipeRefreshLayout.OnRefreshListener {
     private static final String ARG_PARAM = "title";
     @Bind(R.id.recycler_view)
     MyRecyclerView mRecyclerView;
@@ -45,6 +46,8 @@ public class MainFragment extends BaseFragment implements MainFragmentView, Swip
 
     private int page = 1;
     private boolean isRefresh;
+    private boolean isInitView = false;
+    private boolean isLoadOnce = false;
 
 
     public MainFragment() {
@@ -64,12 +67,16 @@ public class MainFragment extends BaseFragment implements MainFragmentView, Swip
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getString(ARG_PARAM);
+            Logger.d(type);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
+        super.onCreateView(inflater, container, savedInstanceState);
+        isInitView = true;
+        lazyLoad();
         return super.onCreateView(inflater, container, savedInstanceState);
 
     }
@@ -87,15 +94,22 @@ public class MainFragment extends BaseFragment implements MainFragmentView, Swip
     }
 
     @Override
-    public void initView() {
-        mSwipeRefreshLayout.setColorSchemeColors(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+    protected void lazyLoad() {
+        if (!isInitView || !isVisible || isLoadOnce) {
+            return;
+        }
         mSwipeRefreshLayout.post(() -> {
             mSwipeRefreshLayout.setRefreshing(true);
             getData();
-
-
+            isInitView = false;
         });
+    }
+
+    @Override
+    public void initView() {
+        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
         if (type.equals(Constants.TYPE_MEIZHI)) {
             StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
@@ -129,6 +143,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView, Swip
     @Override
     public void showListView(List<Gank> list) {
         page++;
+        isLoadOnce = true;
         if (isRefresh) {
             meizhiAdapter.refreshData(list);
             isRefresh = false;
@@ -141,6 +156,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView, Swip
     @Override
     public void refreshGankList(List<Gank> list) {
         page++;
+        isLoadOnce = true;
         if (isRefresh) {
             gankAdapter.refreshData(list);
             isRefresh = false;

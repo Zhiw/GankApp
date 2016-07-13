@@ -1,6 +1,7 @@
 package com.zhiw.gankapp.ui.Activity;
 
 import com.zhiw.gankapp.R;
+import com.zhiw.gankapp.adapter.ViewPagerAdapter;
 import com.zhiw.gankapp.app.BaseActivity;
 import com.zhiw.gankapp.ui.Fragment.MainFragment;
 
@@ -9,7 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -39,8 +39,9 @@ public class MainActivity extends BaseActivity
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
-    private List<android.support.v4.app.Fragment> mFragmentList;
-    private String[] titles = {"福利", "Android", "iOS", "前端","休息视频"};
+    private String[] titles = {"福利", "Android", "iOS", "前端", "休息视频"};
+
+    private ViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,27 +61,15 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
         mNavView.setNavigationItemSelectedListener(this);
 
-        mFragmentList = new ArrayList<>();
+        List<android.support.v4.app.Fragment> fragmentList = new ArrayList<>();
         for (String title : titles) {
-            mFragmentList.add(MainFragment.newInstance(title));
+            fragmentList.add(MainFragment.newInstance(title));
         }
 
-        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
-            @Override
-            public android.support.v4.app.Fragment getItem(int position) {
-                return mFragmentList.get(position);
-            }
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragmentList);
+        mViewPager.setAdapter(mViewPagerAdapter);
 
-            @Override
-            public int getCount() {
-                return mFragmentList.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return titles[position];
-            }
-        });
+        mViewPager.setOffscreenPageLimit(5);
 
         mTabLayout.setupWithViewPager(mViewPager);
 
