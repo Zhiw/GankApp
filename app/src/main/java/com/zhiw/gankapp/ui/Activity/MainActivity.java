@@ -1,25 +1,19 @@
 package com.zhiw.gankapp.ui.Activity;
 
 import com.zhiw.gankapp.R;
-import com.zhiw.gankapp.adapter.ViewPagerAdapter;
 import com.zhiw.gankapp.app.BaseActivity;
-import com.zhiw.gankapp.ui.Fragment.MainFragment;
+import com.zhiw.gankapp.app.BaseFragment;
+import com.zhiw.gankapp.ui.Fragment.CategoryFragment;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -28,20 +22,13 @@ public class MainActivity extends BaseActivity
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.tab_layout)
-    TabLayout mTabLayout;
-    @Bind(R.id.view_pager)
-    ViewPager mViewPager;
-    @Bind(R.id.fab)
-    FloatingActionButton mFab;
     @Bind(R.id.nav_view)
     NavigationView mNavView;
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
-    private String[] titles = {"福利", "Android", "iOS", "前端", "休息视频"};
+    private BaseFragment mFragment;
 
-    private ViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,25 +40,18 @@ public class MainActivity extends BaseActivity
     }
 
     private void init() {
-        mFab.setOnClickListener(v -> Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.setDrawerListener(toggle);
         toggle.syncState();
         mNavView.setNavigationItemSelectedListener(this);
 
-        List<android.support.v4.app.Fragment> fragmentList = new ArrayList<>();
-        for (String title : titles) {
-            fragmentList.add(MainFragment.newInstance(title));
-        }
+        mFragment = new CategoryFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.frame_content, mFragment)
+                .commit();
 
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), fragmentList);
-        mViewPager.setAdapter(mViewPagerAdapter);
-
-        mViewPager.setOffscreenPageLimit(5);
-
-        mTabLayout.setupWithViewPager(mViewPager);
 
     }
 
