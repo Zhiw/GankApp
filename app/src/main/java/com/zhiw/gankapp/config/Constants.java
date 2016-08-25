@@ -15,6 +15,8 @@ public class Constants {
 
     public static final String TYPE_IOS="iOS";
 
+    public static final String TYPE_VIDEO="休息视频";
+
     public static final String URL ="url";
 
     public static final String DES ="des";

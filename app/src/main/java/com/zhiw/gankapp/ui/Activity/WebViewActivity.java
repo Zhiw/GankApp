@@ -1,6 +1,5 @@
 package com.zhiw.gankapp.ui.Activity;
 
-import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.config.Constants;
@@ -9,6 +8,8 @@ import com.zhiw.gankapp.ui.View.IWebView;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import butterknife.Bind;
 
@@ -16,6 +17,8 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
 
     @Bind(R.id.web_view)
     android.webkit.WebView mWebView;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
 
     private WebViewPresenter mPresenter;
 
@@ -50,7 +53,7 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_refresh:
                 mPresenter.refresh(mWebView);
                 break;
@@ -60,6 +63,12 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
 
     @Override
     public void showProgress(int progress) {
-        Logger.d(""+progress);
+        if (mProgressBar == null) return;
+        mProgressBar.setProgress(progress);
+        if (progress==100){
+            mProgressBar.setVisibility(View.GONE);
+        }else {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
     }
 }

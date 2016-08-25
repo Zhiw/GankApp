@@ -26,7 +26,6 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
         settings.setAppCacheEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setSupportZoom(true);
-        settings.setJavaScriptEnabled(true);
         webView.setWebViewClient(new MyWebViewClient());
         webView.setWebChromeClient(new MyWebChromeClient());
         webView.loadUrl(url);
