@@ -6,6 +6,9 @@ import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.presenter.WebViewPresenter;
 import com.zhiw.gankapp.ui.View.IWebView;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +24,8 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
     ProgressBar mProgressBar;
 
     private WebViewPresenter mPresenter;
+
+    private String url;
 
 
     @Override
@@ -38,7 +43,7 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
     @Override
     public void initView() {
 
-        String url = getIntent().getStringExtra(Constants.URL);
+        url = getIntent().getStringExtra(Constants.URL);
         String des = getIntent().getStringExtra(Constants.DES);
         setTitle(des);
         mPresenter.loadWeb(mWebView, url);
@@ -57,6 +62,9 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
             case R.id.action_refresh:
                 mPresenter.refresh(mWebView);
                 break;
+            case R.id.action_copy:
+                ClipboardManager copy = (ClipboardManager) WebViewActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                copy.setPrimaryClip(ClipData.newPlainText(null, url));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -65,9 +73,9 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
     public void showProgress(int progress) {
         if (mProgressBar == null) return;
         mProgressBar.setProgress(progress);
-        if (progress==100){
+        if (progress == 100) {
             mProgressBar.setVisibility(View.GONE);
-        }else {
+        } else {
             mProgressBar.setVisibility(View.VISIBLE);
         }
     }

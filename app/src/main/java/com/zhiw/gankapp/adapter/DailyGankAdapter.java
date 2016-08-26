@@ -76,7 +76,8 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     intent.putExtra(Constants.URL, gank.getUrl());
                     intent.putExtra(Constants.DATE, gank.getPublishedAt());
 
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context, ((MeizhiViewHolder) holder).mImageView, context.getString(R.string.transition));
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                            .makeSceneTransitionAnimation((Activity) context, v, context.getString(R.string.transition));
                     ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
                 }
             });
@@ -93,14 +94,11 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((GankViewHolder) holder).mTvCategory.setText(gank.getType());
             ((GankViewHolder) holder).mTvTitle.setText(gank.getDesc());
 
-            ((GankViewHolder) holder).mTvTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, WebViewActivity.class);
-                    intent.putExtra(Constants.URL, gank.getUrl());
-                    intent.putExtra(Constants.DES, gank.getDesc());
-                    context.startActivity(intent);
-                }
+            ((GankViewHolder) holder).mTvTitle.setOnClickListener(v -> {
+                Intent intent = new Intent(context, WebViewActivity.class);
+                intent.putExtra(Constants.URL, gank.getUrl());
+                intent.putExtra(Constants.DES, gank.getDesc());
+                context.startActivity(intent);
             });
 
         }

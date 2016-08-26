@@ -11,11 +11,12 @@ import com.zhiw.gankapp.ui.widget.MyRecyclerView;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +27,8 @@ public class DailyFragment extends BaseFragment implements DailyListView {
 
     @Bind(R.id.recycler_view)
     MyRecyclerView mRecyclerView;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
 
     private DailyListPresenter mPresenter;
     private DailyGankListAdapter mAdapter;
@@ -39,7 +42,6 @@ public class DailyFragment extends BaseFragment implements DailyListView {
     public static DailyFragment newInstance() {
         return new DailyFragment();
     }
-
 
 
     @Override
@@ -71,8 +73,14 @@ public class DailyFragment extends BaseFragment implements DailyListView {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
+    public void showProgress(boolean isShow) {
+        if (isShow) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
+
+
+
 }

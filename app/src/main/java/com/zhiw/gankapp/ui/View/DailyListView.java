@@ -13,4 +13,6 @@ import java.util.List;
 public interface DailyListView extends BaseView {
 
     void refreshGanData(List<Gank> list);
+
+    void showProgress(boolean isShow);
 }

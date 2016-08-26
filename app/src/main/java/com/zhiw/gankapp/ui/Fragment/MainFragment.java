@@ -128,12 +128,6 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
 
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
     public void showProgress(boolean show) {
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(show);

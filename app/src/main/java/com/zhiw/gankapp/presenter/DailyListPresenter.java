@@ -34,6 +34,7 @@ public class DailyListPresenter extends BasePresenter<DailyListView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
                     if (gankData.getResults().size() != 0) {
+                        viewImpl.showProgress(false);
                         viewImpl.refreshGanData(gankData.getResults());
                     }
                 });

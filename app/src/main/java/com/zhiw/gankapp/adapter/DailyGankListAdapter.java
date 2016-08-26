@@ -6,10 +6,14 @@ import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.ui.Activity.DailyGankActivity;
+import com.zhiw.gankapp.ui.Activity.MeizhiActivity;
 import com.zhiw.gankapp.utils.DateUtil;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -56,6 +60,16 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
         holder.mTvDate.setText(gank.getDesc());
         holder.mTvDate.setText(DateUtil.parseDate(gank.getPublishedAt()));
         holder.mTvDesc.setText(gank.getDesc());
+
+        holder.mMeizhi.setOnClickListener(v -> {
+            Intent intent = new Intent(context, MeizhiActivity.class);
+            intent.putExtra(Constants.URL, gank.getUrl());
+            intent.putExtra(Constants.DATE, gank.getPublishedAt());
+
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation((Activity) context, v, context.getString(R.string.transition));
+            ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
+        });
 
         holder.mCardView.setOnClickListener(v -> {
             Intent intent = new Intent(context, DailyGankActivity.class);
