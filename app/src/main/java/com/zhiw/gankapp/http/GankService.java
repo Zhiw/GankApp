@@ -1,5 +1,6 @@
 package com.zhiw.gankapp.http;
 
+import com.zhiw.gankapp.model.DailyGank;
 import com.zhiw.gankapp.model.GankData;
 
 import retrofit2.http.GET;
@@ -23,7 +24,7 @@ public interface GankService {
 
     //请求某天干货数据
     @GET("day/{year}/{month}/{day}")
-    Observable<GankData> getDailyData(
+    Observable<DailyGank> getDailyData(
             @Path("year") int year,
             @Path("month") int month,
             @Path("day") int day);

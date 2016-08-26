@@ -2,7 +2,7 @@ package com.zhiw.gankapp.ui.Fragment;
 
 
 import com.zhiw.gankapp.R;
-import com.zhiw.gankapp.adapter.DailyGankAdapter;
+import com.zhiw.gankapp.adapter.DailyGankListAdapter;
 import com.zhiw.gankapp.app.BaseFragment;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.presenter.DailyListPresenter;
@@ -28,7 +28,7 @@ public class DailyFragment extends BaseFragment implements DailyListView {
     MyRecyclerView mRecyclerView;
 
     private DailyListPresenter mPresenter;
-    private DailyGankAdapter mAdapter;
+    private DailyGankListAdapter mAdapter;
 
 
     public DailyFragment() {
@@ -56,7 +56,7 @@ public class DailyFragment extends BaseFragment implements DailyListView {
 
     @Override
     public void initView() {
-        mAdapter = new DailyGankAdapter(fragmentActivity);
+        mAdapter = new DailyGankListAdapter(fragmentActivity);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(fragmentActivity));
         mRecyclerView.setAdapter(mAdapter);
         mPresenter.getData();

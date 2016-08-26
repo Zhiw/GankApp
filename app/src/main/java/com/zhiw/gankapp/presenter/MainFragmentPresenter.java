@@ -3,8 +3,6 @@ package com.zhiw.gankapp.presenter;
 import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.app.BasePresenter;
 import com.zhiw.gankapp.config.Constants;
-import com.zhiw.gankapp.http.GankRetrofit;
-import com.zhiw.gankapp.http.GankService;
 import com.zhiw.gankapp.ui.View.MainFragmentView;
 
 import android.content.Context;
@@ -25,9 +23,7 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
     }
 
     public void getMeizhi(int page){
-        GankRetrofit.getRetrofit()
-                .create(GankService.class)
-                .getGank(Constants.TYPE_MEIZHI,10,page)
+        gank.getGank(Constants.TYPE_MEIZHI,10,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
@@ -40,9 +36,8 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
     }
 
     public void getGank(String type,int page){
-        GankRetrofit.getRetrofit()
-                .create(GankService.class)
-                .getGank(type,10,page)
+
+        gank.getGank(type,10,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {

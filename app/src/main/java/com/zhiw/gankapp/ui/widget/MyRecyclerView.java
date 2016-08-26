@@ -51,11 +51,13 @@ public class MyRecyclerView extends RecyclerView {
 
     @Override
     public void onScrollStateChanged(int state) {
-        RecyclerView.LayoutManager layoutManager =  getLayoutManager();
+        RecyclerView.LayoutManager layoutManager = getLayoutManager();
         if (state == RecyclerView.SCROLL_STATE_IDLE) {
             int totalCount = layoutManager.getItemCount();
             if (lastVisibleItemPosition == totalCount - 1) {
-                mListener.loadMore();
+                if (mListener != null) {
+                    mListener.loadMore();
+                }
 
             }
         }

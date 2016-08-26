@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity
     private Fragment mCurrentFragment;
     private FragmentManager mFragmentManager;
     private Map<String, BaseFragment> mFragmentList = new HashMap<>();
-    private int mLastItem = -1;
+    private int mLastItemId = -1;
 
 
     @Override
@@ -50,16 +50,20 @@ public class MainActivity extends BaseActivity
     private void init() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         mNavView.setNavigationItemSelectedListener(this);
 
         Fragment fragment = createFragment(DailyFragment.class);
         mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.beginTransaction()
+        mFragmentManager
+                .beginTransaction()
                 .add(R.id.frame_content, fragment)
                 .commit();
-        setTitle("每日干货");
+
+        MenuItem menuItem = mNavView.getMenu().getItem(0);
+        mLastItemId = menuItem.getItemId();
+        setTitle(menuItem.getTitle());
         mCurrentFragment = fragment;
 
 
@@ -110,12 +114,11 @@ public class MainActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation viewImpl item clicks here.
         int id = item.getItemId();
+        if (mLastItemId != id) {
             if (id == R.id.nav_home) {
                 BaseFragment fragment = createFragment(DailyFragment.class);
                 switchFragment(fragment);
-
             } else if (id == R.id.nav_sort) {
                 BaseFragment fragment = createFragment(CategoryFragment.class);
                 switchFragment(fragment);
@@ -125,11 +128,12 @@ public class MainActivity extends BaseActivity
             } else if (id == R.id.nav_send) {
 
             }
+            mLastItemId = id;
+        }
+
 
         setTitle(item.getTitle());
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -141,6 +145,7 @@ public class MainActivity extends BaseActivity
         } else {
             try {
                 fragment = (BaseFragment) Class.forName(className).newInstance();
+                mFragmentList.put(className,fragment);
             } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
