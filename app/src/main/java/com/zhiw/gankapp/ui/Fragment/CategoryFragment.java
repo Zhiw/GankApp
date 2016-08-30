@@ -1,4 +1,4 @@
-package com.zhiw.gankapp.ui.Fragment;
+package com.zhiw.gankapp.ui.fragment;
 
 
 import com.zhiw.gankapp.R;

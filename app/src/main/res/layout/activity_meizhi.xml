@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.zhiw.gankapp.ui.Activity.MeizhiActivity">
+        tools:context="com.zhiw.gankapp.ui.activity.MeizhiActivity">
     <include layout="@layout/include_base_toolbar"/>
     <ImageView
             android:id="@+id/meizhi"

@@ -5,7 +5,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
-import com.zhiw.gankapp.ui.Activity.MeizhiActivity;
+import com.zhiw.gankapp.ui.activity.MeizhiActivity;
 
 import android.app.Activity;
 import android.content.Context;

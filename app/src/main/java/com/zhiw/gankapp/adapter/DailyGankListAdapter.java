@@ -5,8 +5,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
-import com.zhiw.gankapp.ui.Activity.DailyGankActivity;
-import com.zhiw.gankapp.ui.Activity.MeizhiActivity;
+import com.zhiw.gankapp.ui.activity.DailyGankActivity;
+import com.zhiw.gankapp.ui.activity.MeizhiActivity;
 import com.zhiw.gankapp.utils.DateUtil;
 
 import android.app.Activity;

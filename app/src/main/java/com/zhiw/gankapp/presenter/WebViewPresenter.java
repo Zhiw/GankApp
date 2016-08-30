@@ -1,7 +1,7 @@
 package com.zhiw.gankapp.presenter;
 
 import com.zhiw.gankapp.app.BasePresenter;
-import com.zhiw.gankapp.ui.View.IWebView;
+import com.zhiw.gankapp.ui.view.IWebView;
 
 import android.content.Context;
 import android.webkit.WebChromeClient;

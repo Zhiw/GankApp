@@ -5,8 +5,8 @@ import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.model.GankDaily;
-import com.zhiw.gankapp.ui.Activity.MeizhiActivity;
-import com.zhiw.gankapp.ui.Activity.WebViewActivity;
+import com.zhiw.gankapp.ui.activity.MeizhiActivity;
+import com.zhiw.gankapp.ui.activity.WebViewActivity;
 
 import android.app.Activity;
 import android.content.Context;

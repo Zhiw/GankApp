@@ -3,7 +3,7 @@ package com.zhiw.gankapp.adapter;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
-import com.zhiw.gankapp.ui.Activity.WebViewActivity;
+import com.zhiw.gankapp.ui.activity.WebViewActivity;
 import com.zhiw.gankapp.utils.DateUtil;
 
 import android.content.Context;

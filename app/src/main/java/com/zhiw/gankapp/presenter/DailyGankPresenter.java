@@ -2,7 +2,7 @@ package com.zhiw.gankapp.presenter;
 
 import com.zhiw.gankapp.app.BasePresenter;
 import com.zhiw.gankapp.model.DailyGank;
-import com.zhiw.gankapp.ui.View.DailyGankView;
+import com.zhiw.gankapp.ui.view.DailyGankView;
 
 import android.content.Context;
 

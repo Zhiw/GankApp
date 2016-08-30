@@ -5,7 +5,7 @@ import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.http.GankRetrofit;
 import com.zhiw.gankapp.http.GankService;
 import com.zhiw.gankapp.model.GankData;
-import com.zhiw.gankapp.ui.View.DailyListView;
+import com.zhiw.gankapp.ui.view.DailyListView;
 
 import android.content.Context;
 

@@ -2,6 +2,7 @@ package com.zhiw.gankapp.app;
 
 import com.orhanobut.logger.Logger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -58,5 +59,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onRestart();
         Logger.i(TAG,"onRestart");
 
+    }
+
+    public void startActivity(Class<?> aClass){
+        startActivity(new Intent(this,aClass));
     }
 }

@@ -1,7 +1,7 @@
 package com.zhiw.gankapp.presenter;
 
 import com.zhiw.gankapp.app.BasePresenter;
-import com.zhiw.gankapp.ui.View.MeizhiView;
+import com.zhiw.gankapp.ui.view.MeizhiView;
 import com.zhiw.gankapp.utils.FileUtil;
 import com.zhiw.gankapp.utils.ShareUtil;
 

@@ -15,18 +15,18 @@ import java.io.IOException;
  */
 public class FileUtil {
 
-    public static Uri saveBitmap(Bitmap bitmap,String name){
-        File dir= new File(Environment.getExternalStorageDirectory(),"Gank");
-        if (!dir.exists()){
+    public static Uri saveBitmap(Bitmap bitmap, String name) {
+        File dir = new File(Environment.getExternalStorageDirectory(), "Gank");
+        if (!dir.exists()) {
             dir.mkdirs();
         }
 
-        File file=new File(dir,name);
+        File file = new File(dir, name);
         FileOutputStream fileOutputStream;
         try {
-            fileOutputStream=new FileOutputStream(file);
-            if (bitmap!=null){
-                bitmap.compress(Bitmap.CompressFormat.JPEG,100,fileOutputStream);
+            fileOutputStream = new FileOutputStream(file);
+            if (bitmap != null) {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
                 fileOutputStream.flush();
                 fileOutputStream.close();
             }

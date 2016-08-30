@@ -1,10 +1,10 @@
-package com.zhiw.gankapp.ui.Activity;
+package com.zhiw.gankapp.ui.activity;
 
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.app.BaseActivity;
 import com.zhiw.gankapp.app.BaseFragment;
-import com.zhiw.gankapp.ui.Fragment.CategoryFragment;
-import com.zhiw.gankapp.ui.Fragment.DailyFragment;
+import com.zhiw.gankapp.ui.fragment.CategoryFragment;
+import com.zhiw.gankapp.ui.fragment.DailyFragment;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -105,6 +105,7 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(AboutActivity.class);
             return true;
         }
 
@@ -145,7 +146,7 @@ public class MainActivity extends BaseActivity
         } else {
             try {
                 fragment = (BaseFragment) Class.forName(className).newInstance();
-                mFragmentList.put(className,fragment);
+                mFragmentList.put(className, fragment);
             } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

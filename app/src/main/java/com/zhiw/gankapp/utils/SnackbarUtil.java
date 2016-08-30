@@ -10,8 +10,8 @@ import android.view.View;
  */
 public class SnackbarUtil {
 
-    public static void showSnackbar(View view, String text, String actionText, View.OnClickListener listener){
-        Snackbar.make(view,text,Snackbar.LENGTH_SHORT).setAction(actionText,listener).show();
+    public static void showSnackbar(View view, String text, String actionText, View.OnClickListener listener) {
+        Snackbar.make(view, text, Snackbar.LENGTH_SHORT).setAction(actionText, listener).show();
     }
 
     public static void showSnackbar(View view, String tipText) {

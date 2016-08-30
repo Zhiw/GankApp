@@ -3,7 +3,7 @@ package com.zhiw.gankapp.presenter;
 import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.app.BasePresenter;
 import com.zhiw.gankapp.config.Constants;
-import com.zhiw.gankapp.ui.View.MainFragmentView;
+import com.zhiw.gankapp.ui.view.MainFragmentView;
 
 import android.content.Context;
 
