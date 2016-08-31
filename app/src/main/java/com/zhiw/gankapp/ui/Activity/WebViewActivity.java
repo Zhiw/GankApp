@@ -1,10 +1,10 @@
-package com.zhiw.gankapp.ui.Activity;
+package com.zhiw.gankapp.ui.activity;
 
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.presenter.WebViewPresenter;
-import com.zhiw.gankapp.ui.View.IWebView;
+import com.zhiw.gankapp.ui.view.IWebView;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;

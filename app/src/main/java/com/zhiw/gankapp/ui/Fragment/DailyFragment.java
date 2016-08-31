@@ -1,4 +1,4 @@
-package com.zhiw.gankapp.ui.Fragment;
+package com.zhiw.gankapp.ui.fragment;
 
 
 import com.zhiw.gankapp.R;
@@ -6,7 +6,7 @@ import com.zhiw.gankapp.adapter.DailyGankListAdapter;
 import com.zhiw.gankapp.app.BaseFragment;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.presenter.DailyListPresenter;
-import com.zhiw.gankapp.ui.View.DailyListView;
+import com.zhiw.gankapp.ui.view.DailyListView;
 import com.zhiw.gankapp.ui.widget.MyRecyclerView;
 
 import android.support.v4.app.Fragment;

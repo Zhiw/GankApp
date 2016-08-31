@@ -1,4 +1,4 @@
-package com.zhiw.gankapp.ui.Activity;
+package com.zhiw.gankapp.ui.activity;
 
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.adapter.DailyGankAdapter;
@@ -6,7 +6,7 @@ import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.GankDaily;
 import com.zhiw.gankapp.presenter.DailyGankPresenter;
-import com.zhiw.gankapp.ui.View.DailyGankView;
+import com.zhiw.gankapp.ui.view.DailyGankView;
 import com.zhiw.gankapp.utils.DateUtil;
 
 import android.support.v7.widget.LinearLayoutManager;

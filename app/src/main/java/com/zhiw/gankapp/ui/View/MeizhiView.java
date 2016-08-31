@@ -1,4 +1,4 @@
-package com.zhiw.gankapp.ui.View;
+package com.zhiw.gankapp.ui.view;
 
 import com.zhiw.gankapp.app.BaseView;
 

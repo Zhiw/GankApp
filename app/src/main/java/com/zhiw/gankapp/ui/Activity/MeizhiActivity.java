@@ -1,4 +1,4 @@
-package com.zhiw.gankapp.ui.Activity;
+package com.zhiw.gankapp.ui.activity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -7,7 +7,7 @@ import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.presenter.MeizhiPresenter;
-import com.zhiw.gankapp.ui.View.MeizhiView;
+import com.zhiw.gankapp.ui.view.MeizhiView;
 import com.zhiw.gankapp.utils.DateUtil;
 import com.zhiw.gankapp.utils.SnackbarUtil;
 

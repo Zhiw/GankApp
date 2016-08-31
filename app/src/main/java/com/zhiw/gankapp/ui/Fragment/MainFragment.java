@@ -1,4 +1,4 @@
-package com.zhiw.gankapp.ui.Fragment;
+package com.zhiw.gankapp.ui.fragment;
 
 
 import com.orhanobut.logger.Logger;
@@ -9,7 +9,7 @@ import com.zhiw.gankapp.app.BaseTabFragment;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.presenter.MainFragmentPresenter;
-import com.zhiw.gankapp.ui.View.MainFragmentView;
+import com.zhiw.gankapp.ui.view.MainFragmentView;
 import com.zhiw.gankapp.ui.widget.MyRecyclerView;
 
 import android.os.Bundle;
