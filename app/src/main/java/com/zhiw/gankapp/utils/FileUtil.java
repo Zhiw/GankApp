@@ -15,8 +15,9 @@ import java.io.IOException;
  */
 public class FileUtil {
 
+    // FIXME: 16/9/1 can not save image
     public static Uri saveBitmap(Bitmap bitmap, String name) {
-        File dir = new File(Environment.getExternalStorageDirectory(), "Gank");
+        File dir = new File(Environment.getExternalStorageDirectory().getPath()+"/"+"Gank");
         if (!dir.exists()) {
             dir.mkdirs();
         }

@@ -23,7 +23,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     @Bind(R.id.meizhi)
-    ImageView mMeizhi;
+    ImageView meizhi;
 
 
     MeizhiPresenter mPresenter;
@@ -50,14 +50,14 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
         String url = getIntent().getStringExtra(Constants.URL);
         date = DateUtil.parseDate(getIntent().getStringExtra(Constants.DATE));
 
-        mAttacher = new PhotoViewAttacher(mMeizhi);
+        mAttacher = new PhotoViewAttacher(meizhi);
         Glide.with(this)
                 .load(url)
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        mMeizhi.setImageBitmap(resource);
+                        meizhi.setImageBitmap(resource);
                         mAttacher.update();
                         mBitmap = resource;
                     }
@@ -66,12 +66,12 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
         mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
             @Override
             public void onPhotoTap(View view, float v, float v1) {
-                hideOrShowToolBar();
+//                hideOrShowToolBar();
             }
 
             @Override
             public void onOutsidePhotoTap() {
-                hideOrShowToolBar();
+//                hideOrShowToolBar();
 
             }
         });
@@ -100,7 +100,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     @Override
     public void showImageResult(String text) {
-        SnackbarUtil.showSnackbar(mMeizhi, text);
+        SnackbarUtil.showSnackbar(meizhi, text);
 
     }
 }

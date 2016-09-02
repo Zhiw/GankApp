@@ -19,4 +19,6 @@
         \n\n 感谢代码家提供的API,感谢网上开源项目提供者
         \n\n Github:https://github.com/Zhiw
     </string>
+    <string name="url_refresh">刷新</string>
+    <string name="url_copy">复制链接</string>
 </resources>
