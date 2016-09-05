@@ -8,11 +8,11 @@ import com.zhiw.gankapp.utils.DateUtil;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -74,8 +74,8 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
 
     class GankViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.card_view)
-        CardView mCardView;
+        @Bind(R.id.linear_layout)
+        LinearLayout mLinearLayout;
         @Bind(R.id.title)
         TextView mTitle;
         @Bind(R.id.who)
@@ -91,7 +91,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
             ButterKnife.bind(this, itemView);
         }
 
-        @OnClick(R.id.card_view)
+        @OnClick(R.id.linear_layout)
         public void onClick() {
             Intent intent = new Intent(context, WebViewActivity.class);
             intent.putExtra(Constants.URL, ((Gank) view.getTag()).getUrl());

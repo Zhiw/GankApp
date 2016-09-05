@@ -11,6 +11,7 @@ import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.presenter.MainFragmentPresenter;
 import com.zhiw.gankapp.ui.view.MainFragmentView;
 import com.zhiw.gankapp.ui.widget.MyRecyclerView;
+import com.zhiw.gankapp.ui.widget.RecyclerViewDivider;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -118,6 +119,7 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
         } else {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity, LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearLayoutManager);
+            mRecyclerView.addItemDecoration(new RecyclerViewDivider(fragmentActivity));
             gankAdapter = new GankAdapter(fragmentActivity, null);
             mRecyclerView.setAdapter(gankAdapter);
         }
