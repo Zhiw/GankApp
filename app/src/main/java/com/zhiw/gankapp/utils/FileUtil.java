@@ -1,7 +1,6 @@
 package com.zhiw.gankapp.utils;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
@@ -16,13 +15,13 @@ import java.io.IOException;
 public class FileUtil {
 
     // FIXME: 16/9/1 can not save image
-    public static Uri saveBitmap(Bitmap bitmap, String name) {
-        File dir = new File(Environment.getExternalStorageDirectory().getPath()+"/"+"Gank");
+    public static File saveBitmap(Bitmap bitmap, String name) {
+        File dir = new File(Environment.getExternalStorageDirectory(), "Gank");
         if (!dir.exists()) {
-            dir.mkdirs();
+            dir.mkdir();
         }
 
-        File file = new File(dir, name);
+        File file = new File(dir, name + ".jpg");
         FileOutputStream fileOutputStream;
         try {
             fileOutputStream = new FileOutputStream(file);
@@ -33,7 +32,13 @@ public class FileUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (bitmap != null && !bitmap.isRecycled()) {
+                bitmap.recycle();
+
+            }
+
         }
-        return Uri.fromFile(file);
+        return file;
     }
 }
