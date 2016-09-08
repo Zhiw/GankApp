@@ -15,10 +15,11 @@ import android.content.Context;
 
 public class App extends Application {
     private static Context sContext;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        sContext=getApplicationContext();
+        sContext = getApplicationContext();
         Logger
                 .init()                         // default PRETTYLOGGER or use just init()
                 .methodCount(3)                 // default 2
@@ -28,7 +29,7 @@ public class App extends Application {
                 .logTool(new AndroidLogTool()); // custom log tool, optional
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return sContext;
     }
 }

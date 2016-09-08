@@ -14,7 +14,6 @@ import java.io.IOException;
  */
 public class FileUtil {
 
-    // FIXME: 16/9/1 can not save image
     public static File saveBitmap(Bitmap bitmap, String name) {
         File dir = new File(Environment.getExternalStorageDirectory(), "Gank");
         if (!dir.exists()) {
@@ -32,12 +31,6 @@ public class FileUtil {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (bitmap != null && !bitmap.isRecycled()) {
-                bitmap.recycle();
-
-            }
-
         }
         return file;
     }

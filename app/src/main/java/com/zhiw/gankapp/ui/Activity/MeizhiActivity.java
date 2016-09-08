@@ -11,7 +11,12 @@ import com.zhiw.gankapp.ui.view.MeizhiView;
 import com.zhiw.gankapp.utils.DateUtil;
 import com.zhiw.gankapp.utils.SnackbarUtil;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +26,7 @@ import butterknife.Bind;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
+    private static final int REQUEST_CODE_WRITE_STORAGE = 757;
 
     @Bind(R.id.meizhi)
     ImageView meizhi;
@@ -66,12 +72,12 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
         mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
             @Override
             public void onPhotoTap(View view, float v, float v1) {
-//                hideOrShowToolBar();
+                hideOrShowToolBar();
             }
 
             @Override
             public void onOutsidePhotoTap() {
-//                hideOrShowToolBar();
+                hideOrShowToolBar();
 
             }
         });
@@ -88,10 +94,18 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                mPresenter.saveImage(mBitmap, date);
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_STORAGE);
+                } else {
+                    mPresenter.downloadImage(mBitmap, date, 0);
+                }
                 break;
             case R.id.action_share:
-                mPresenter.shareImage(mBitmap, date);
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_STORAGE);
+                } else {
+                    mPresenter.downloadImage(mBitmap, date, 1);
+                }
                 break;
 
         }
@@ -102,5 +116,18 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     public void showImageResult(String text) {
         SnackbarUtil.showSnackbar(meizhi, text);
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CODE_WRITE_STORAGE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mPresenter.saveImage(mBitmap, date);
+
+            } else {
+                SnackbarUtil.showSnackbar(meizhi, "没有授权");
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
