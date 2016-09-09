@@ -14,6 +14,9 @@ import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,17 +72,14 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     .load(gank.getUrl())
                     .into(((MeizhiViewHolder) holder).mImageView);
 
-            ((MeizhiViewHolder) holder).mImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, MeizhiActivity.class);
-                    intent.putExtra(Constants.URL, gank.getUrl());
-                    intent.putExtra(Constants.DATE, gank.getPublishedAt());
+            ((MeizhiViewHolder) holder).mImageView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, MeizhiActivity.class);
+                intent.putExtra(Constants.URL, gank.getUrl());
+                intent.putExtra(Constants.DATE, gank.getPublishedAt());
 
-                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                            .makeSceneTransitionAnimation((Activity) context, v, context.getString(R.string.transition));
-                    ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
-                }
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation((Activity) context, v, context.getString(R.string.transition));
+                ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
             });
 
         } else {
@@ -90,9 +90,13 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 ((GankViewHolder) holder).mTvCategory.setVisibility(View.VISIBLE);
 
             }
-
             ((GankViewHolder) holder).mTvCategory.setText(gank.getType());
-            ((GankViewHolder) holder).mTvTitle.setText(gank.getDesc());
+
+            String who = "(" + gank.getWho() + ")";
+            SpannableString spannableString = new SpannableString(who);
+            spannableString.setSpan(new TextAppearanceSpan(context, R.style.ViaTextAppearance), 0, who.length(), 0);
+            SpannableStringBuilder builder = new SpannableStringBuilder(gank.getDesc()).append(spannableString);
+            ((GankViewHolder) holder).mTvTitle.setText(builder.subSequence(0, builder.length()));
 
             ((GankViewHolder) holder).mTvTitle.setOnClickListener(v -> {
                 Intent intent = new Intent(context, WebViewActivity.class);
