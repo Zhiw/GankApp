@@ -4,7 +4,6 @@ import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.app.ToolBarActivity;
 
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.widget.TextView;
@@ -18,8 +17,6 @@ public class AboutActivity extends ToolBarActivity {
     CollapsingToolbarLayout mToolbarLayout;
     @Bind(R.id.tv_about_content)
     TextView mTvAboutContent;
-    @Bind(R.id.fab)
-    FloatingActionButton mFab;
 
     @Override
     protected int getLayoutResId() {
