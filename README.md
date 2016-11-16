@@ -1,5 +1,5 @@
 # GankApp
-一个[gank](gank.io)客户端,主要用来学习Retrofit+RxJava+MVP+Material Design（练手学习项目，还在开发中。。。）
+一个 [gank](gank.io) 客户端，主要用来学习 Retrofit+RxJava+MVP+Material Design（练手学习项目，还在开发中。。。）
 
 # Screenshot
 <div style="text-align:center">
