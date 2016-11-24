@@ -17,9 +17,9 @@ public interface GankService {
 
     @GET(value = "data/{type}/{count}/{page}")
     Observable<GankData> getGank(
-        @Path("type") String type,
-        @Path("count") int count,
-        @Path("page") int page);
+            @Path("type") String type,
+            @Path("count") int count,
+            @Path("page") int page);
 
 
     //请求某天干货数据

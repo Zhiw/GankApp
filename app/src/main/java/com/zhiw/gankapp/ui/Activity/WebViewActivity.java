@@ -5,13 +5,16 @@ import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.presenter.WebViewPresenter;
 import com.zhiw.gankapp.ui.view.IWebView;
+import com.zhiw.gankapp.utils.SnackbarUtil;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import butterknife.Bind;
@@ -19,7 +22,7 @@ import butterknife.Bind;
 public class WebViewActivity extends ToolBarActivity implements IWebView {
 
     @Bind(R.id.web_view)
-    android.webkit.WebView mWebView;
+    WebView mWebView;
     @Bind(R.id.progress_bar)
     ProgressBar mProgressBar;
 
@@ -65,6 +68,15 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
             case R.id.action_copy:
                 ClipboardManager copy = (ClipboardManager) WebViewActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
                 copy.setPrimaryClip(ClipData.newPlainText(null, url));
+                SnackbarUtil.showSnackbar(mWebView, getString(R.string.url_copy_tip));
+                break;
+            case R.id.action_share:
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.url_share));
+                intent.putExtra(Intent.EXTRA_TEXT, url);
+                startActivity(Intent.createChooser(intent, "分享到"));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

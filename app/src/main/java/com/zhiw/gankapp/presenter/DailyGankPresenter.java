@@ -20,16 +20,16 @@ public class DailyGankPresenter extends BasePresenter<DailyGankView> {
         super(context, view);
     }
 
-    public void getDailyGank(int[] date){
-        int year=date[0];
-        int month=date[1];
-        int day=date[2];
+    public void getDailyGank(int[] date) {
+        int year = date[0];
+        int month = date[1];
+        int day = date[2];
 
-        gank.getDailyData(year,month,day)
+        gank.getDailyData(year, month, day)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(dailyGank -> {
-                    if (!dailyGank.isError()){
+                    if (!dailyGank.isError()) {
                         viewImpl.refreshUI(dailyGank.getResults());
                     }
 

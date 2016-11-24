@@ -22,8 +22,8 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
         super(context, view);
     }
 
-    public void getMeizhi(int page){
-        gank.getGank(Constants.TYPE_MEIZHI,10,page)
+    public void getMeizhi(int page) {
+        gank.getGank(Constants.TYPE_MEIZHI, 10, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
@@ -35,9 +35,9 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
 
     }
 
-    public void getGank(String type,int page){
+    public void getGank(String type, int page) {
 
-        gank.getGank(type,10,page)
+        gank.getGank(type, 10, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {

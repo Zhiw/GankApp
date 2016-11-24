@@ -19,7 +19,7 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
         super(context, view);
     }
 
-    public void loadWeb(android.webkit.WebView webView, String url){
+    public void loadWeb(android.webkit.WebView webView, String url) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
@@ -31,12 +31,12 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
         webView.loadUrl(url);
     }
 
-    public void refresh(WebView webView){
+    public void refresh(WebView webView) {
         webView.reload();
 
     }
 
-    class MyWebViewClient extends WebViewClient{
+    class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(android.webkit.WebView view, String url) {
             view.loadUrl(url);
@@ -44,7 +44,7 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
         }
     }
 
-    class MyWebChromeClient extends WebChromeClient{
+    class MyWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(android.webkit.WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);

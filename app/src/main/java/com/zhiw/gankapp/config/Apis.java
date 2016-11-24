@@ -8,6 +8,6 @@ package com.zhiw.gankapp.config;
 
 public class Apis {
 
-    public static String GANK_BASE_URL="http://gank.io/api/";
+    public static String GANK_BASE_URL = "http://gank.io/api/";
 
 }
