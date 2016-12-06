@@ -5,6 +5,7 @@ import com.zhiw.gankapp.app.BaseActivity;
 import com.zhiw.gankapp.app.BaseFragment;
 import com.zhiw.gankapp.ui.fragment.CategoryFragment;
 import com.zhiw.gankapp.ui.fragment.DailyFragment;
+import com.zhiw.gankapp.ui.fragment.ReadingFragment;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -25,12 +26,9 @@ import butterknife.Bind;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
-    @Bind(R.id.nav_view)
-    NavigationView mNavView;
-    @Bind(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+    @Bind(R.id.toolbar) Toolbar mToolbar;
+    @Bind(R.id.nav_view) NavigationView mNavView;
+    @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
 
     private Fragment mCurrentFragment;
     private FragmentManager mFragmentManager;
@@ -120,8 +118,13 @@ public class MainActivity extends BaseActivity
             if (id == R.id.nav_home) {
                 BaseFragment fragment = createFragment(DailyFragment.class);
                 switchFragment(fragment);
+
             } else if (id == R.id.nav_sort) {
                 BaseFragment fragment = createFragment(CategoryFragment.class);
+                switchFragment(fragment);
+
+            }else if (id==R.id.nav_reading){
+                BaseFragment fragment = createFragment(ReadingFragment.class);
                 switchFragment(fragment);
 
             } else if (id == R.id.nav_share) {

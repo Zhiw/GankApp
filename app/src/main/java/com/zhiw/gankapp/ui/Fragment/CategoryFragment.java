@@ -21,10 +21,8 @@ import butterknife.Bind;
 public class CategoryFragment extends BaseFragment {
 
 
-    @Bind(R.id.tab_layout)
-    TabLayout mTabLayout;
-    @Bind(R.id.view_pager)
-    ViewPager mViewPager;
+    @Bind(R.id.tab_layout) TabLayout mTabLayout;
+    @Bind(R.id.view_pager) ViewPager mViewPager;
 
 
     private String[] titles = {"福利", "Android", "iOS", "前端", "休息视频"};

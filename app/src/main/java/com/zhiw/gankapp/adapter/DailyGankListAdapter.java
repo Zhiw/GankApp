@@ -55,11 +55,11 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
         Gank gank = mList.get(position);
         Glide.with(context)
                 .load(gank.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.mMeizhi);
-        holder.mTvDate.setText(gank.getDesc());
-        holder.mTvDate.setText(DateUtil.parseDate(gank.getPublishedAt()));
-        holder.mTvDesc.setText(gank.getDesc());
+        holder.mDateText.setText(gank.getDesc());
+        holder.mDateText.setText(DateUtil.parseDate(gank.getPublishedAt()));
+        holder.mDescText.setText(gank.getDesc());
 
         holder.mMeizhi.setOnClickListener(v -> {
             Intent intent = new Intent(context, MeizhiActivity.class);
@@ -98,14 +98,10 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
     }
 
     class DailyGankViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.card_view)
-        CardView mCardView;
-        @Bind(R.id.meizhi)
-        ImageView mMeizhi;
-        @Bind(R.id.tv_date)
-        TextView mTvDate;
-        @Bind(R.id.tv_desc)
-        TextView mTvDesc;
+        @Bind(R.id.card_view) CardView mCardView;
+        @Bind(R.id.meizhi) ImageView mMeizhi;
+        @Bind(R.id.tv_date) TextView mDateText;
+        @Bind(R.id.tv_desc) TextView mDescText;
 
         DailyGankViewHolder(View itemView) {
             super(itemView);

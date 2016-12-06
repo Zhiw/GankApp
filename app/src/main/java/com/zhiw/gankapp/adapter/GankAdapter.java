@@ -74,15 +74,10 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
 
     class GankViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.linear_layout)
-        LinearLayout mLinearLayout;
-        @Bind(R.id.title)
-        TextView mTitle;
-        @Bind(R.id.who)
-        TextView mWho;
-        @Bind(R.id.date)
-        TextView mDate;
-
+        @Bind(R.id.linear_layout) LinearLayout mLinearLayout;
+        @Bind(R.id.title) TextView mTitle;
+        @Bind(R.id.who) TextView mWho;
+        @Bind(R.id.date) TextView mDate;
         View view;
 
         public GankViewHolder(View itemView) {

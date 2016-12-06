@@ -12,6 +12,11 @@
                 android:icon="@drawable/ic_sort"
                 android:title="@string/nav_menu_category"/>
 
+        <item
+                android:id="@+id/nav_reading"
+                android:icon="@drawable/ic_reading_black_24dp"
+                android:title="@string/nav_reading"/>
+
     </group>
 
     <item android:title="Communicate">

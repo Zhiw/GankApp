@@ -16,8 +16,7 @@ import butterknife.Bind;
 
 public class DailyGankActivity extends ToolBarActivity implements DailyGankView {
 
-    @Bind(R.id.daily_gank_recyclerview)
-    RecyclerView mDailyGankRecyclerview;
+    @Bind(R.id.daily_gank_recyclerview) RecyclerView mDailyGankRecyclerView;
 
     private DailyGankPresenter mPresenter;
 
@@ -43,9 +42,9 @@ public class DailyGankActivity extends ToolBarActivity implements DailyGankView 
         int[] date = DateUtil.getDate(publishedTime);
         mPresenter.getDailyGank(date);
 
-        mDailyGankRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        mDailyGankRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new DailyGankAdapter(this);
-        mDailyGankRecyclerview.setAdapter(mAdapter);
+        mDailyGankRecyclerView.setAdapter(mAdapter);
 
 
     }

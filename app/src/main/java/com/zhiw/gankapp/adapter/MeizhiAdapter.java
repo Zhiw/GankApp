@@ -53,7 +53,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
         holder.view.setTag(gank);
         Glide.with(context)
                 .load(gank.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.mImageView);
 
 
@@ -79,8 +79,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
 
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.imageView)
-        ImageView mImageView;
+        @Bind(R.id.imageView) ImageView mImageView;
 
         View view;
 

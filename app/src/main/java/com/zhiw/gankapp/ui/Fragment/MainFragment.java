@@ -34,10 +34,9 @@ import butterknife.ButterKnife;
  */
 public class MainFragment extends BaseTabFragment implements MainFragmentView, SwipeRefreshLayout.OnRefreshListener {
     private static final String ARG_PARAM = "title";
-    @Bind(R.id.recycler_view)
-    MyRecyclerView mRecyclerView;
-    @Bind(R.id.swipe_refresh_layout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @Bind(R.id.recycler_view) MyRecyclerView mRecyclerView;
+    @Bind(R.id.swipe_refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
 
     private String type;
     private MainFragmentPresenter mPresenter;

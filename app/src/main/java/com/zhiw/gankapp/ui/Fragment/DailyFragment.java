@@ -25,10 +25,8 @@ import butterknife.Bind;
  */
 public class DailyFragment extends BaseFragment implements DailyListView {
 
-    @Bind(R.id.recycler_view)
-    MyRecyclerView mRecyclerView;
-    @Bind(R.id.progress_bar)
-    ProgressBar mProgressBar;
+    @Bind(R.id.recycler_view) MyRecyclerView mRecyclerView;
+    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
 
     private DailyListPresenter mPresenter;
     private DailyGankListAdapter mAdapter;

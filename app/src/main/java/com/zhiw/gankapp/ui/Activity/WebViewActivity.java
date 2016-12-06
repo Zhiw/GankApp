@@ -21,10 +21,8 @@ import butterknife.Bind;
 
 public class WebViewActivity extends ToolBarActivity implements IWebView {
 
-    @Bind(R.id.web_view)
-    WebView mWebView;
-    @Bind(R.id.progress_bar)
-    ProgressBar mProgressBar;
+    @Bind(R.id.web_view) WebView mWebView;
+    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
 
     private WebViewPresenter mPresenter;
 
@@ -39,7 +37,7 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
     @Override
     protected void initPresenter() {
         mPresenter = new WebViewPresenter(this, this);
-        mPresenter.init();
+        mPresenter.initWebSettings(mWebView);
 
     }
 

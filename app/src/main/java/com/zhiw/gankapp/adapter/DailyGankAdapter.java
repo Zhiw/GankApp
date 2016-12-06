@@ -1,6 +1,7 @@
 package com.zhiw.gankapp.adapter;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
@@ -70,6 +71,7 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             ((MeizhiViewHolder) holder).mTitle.setText(gank.getType());
             Glide.with(context)
                     .load(gank.getUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(((MeizhiViewHolder) holder).mImageView);
 
             ((MeizhiViewHolder) holder).mImageView.setOnClickListener(v -> {
@@ -146,10 +148,8 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.meizhi)
-        ImageView mImageView;
-        @Bind(R.id.gank_title)
-        TextView mTitle;
+        @Bind(R.id.meizhi) ImageView mImageView;
+        @Bind(R.id.gank_title) TextView mTitle;
 
         public MeizhiViewHolder(View itemView) {
             super(itemView);
