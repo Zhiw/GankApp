@@ -1,5 +1,10 @@
 package com.zhiw.gankapp.app;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 /**
  * ClassName: BaseTabFragment
  * Desc:
@@ -8,6 +13,8 @@ package com.zhiw.gankapp.app;
 public abstract class BaseTabFragment extends BaseFragment {
 
     protected boolean isVisible = false;
+    private boolean isInitView = false;
+    protected boolean isLoadOnce = false;
 
 
     @Override
@@ -22,6 +29,26 @@ public abstract class BaseTabFragment extends BaseFragment {
         }
     }
 
-    protected abstract void lazyLoad();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        loadData();
+        isInitView = true;
+        isLoadOnce = true;
+
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+
+    private void lazyLoad() {
+        if (!isInitView || !isVisible || isLoadOnce) {
+            return;
+        }
+        loadData();
+        isLoadOnce = true;
+
+    }
+
+    protected abstract void loadData();
 
 }

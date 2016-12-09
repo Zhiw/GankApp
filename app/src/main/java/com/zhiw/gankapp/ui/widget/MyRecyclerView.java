@@ -18,9 +18,11 @@ public class MyRecyclerView extends RecyclerView {
     private int lastVisibleItemPosition;
 
 
-    public void setListener(LoadMoreListener listener) {
+    public void setLoadMoreListener(LoadMoreListener listener) {
         mListener = listener;
     }
+
+
 
     public MyRecyclerView(Context context) {
         super(context);

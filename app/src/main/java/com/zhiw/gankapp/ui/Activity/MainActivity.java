@@ -19,7 +19,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 
@@ -90,7 +89,7 @@ public class MainActivity extends BaseActivity
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView)
                 MenuItemCompat.getActionView(searchItem);
-        searchView.setQueryHint("请输入搜索关键词");
+        searchView.setQueryHint(getString(R.string.query_hint));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -100,7 +99,6 @@ public class MainActivity extends BaseActivity
                     inputMethodManager.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
                 }
                 searchView.clearFocus();
-                searchView.setVisibility(View.GONE);
                 return true;
             }
 

@@ -56,7 +56,6 @@ public class CategoryFragment extends BaseFragment {
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(fragmentActivity.getSupportFragmentManager(), fragmentList);
         mViewPager.setAdapter(viewPagerAdapter);
-        mViewPager.setOffscreenPageLimit(5);
 
         mTabLayout.setupWithViewPager(mViewPager);
     }

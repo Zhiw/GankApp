@@ -25,5 +25,8 @@
     <string name="picture_desc">Picture</string>
     <string name="url_copy_tip">链接已复制到粘贴板</string>
     <string name="url_share">分享</string>
+    <string name="empty_hint">暂无搜索结果，请尝试换一个搜索词</string>
+    <string name="query_hint">请输入搜索关键词</string>
+    <string name="action_search">搜索</string>
 
 </resources>

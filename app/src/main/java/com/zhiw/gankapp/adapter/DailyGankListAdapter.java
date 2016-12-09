@@ -1,13 +1,12 @@
 package com.zhiw.gankapp.adapter;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.ui.activity.DailyGankActivity;
 import com.zhiw.gankapp.ui.activity.MeizhiActivity;
 import com.zhiw.gankapp.utils.DateUtil;
+import com.zhiw.gankapp.utils.ImageLoader;
 
 import android.app.Activity;
 import android.content.Context;
@@ -53,10 +52,8 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
     @Override
     public void onBindViewHolder(DailyGankViewHolder holder, int position) {
         Gank gank = mList.get(position);
-        Glide.with(context)
-                .load(gank.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.mMeizhi);
+        ImageLoader.load(context,gank.getUrl(),holder.mMeizhi);
+
         holder.mDateText.setText(gank.getDesc());
         holder.mDateText.setText(DateUtil.parseDate(gank.getPublishedAt()));
         holder.mDescText.setText(gank.getDesc());

@@ -1,11 +1,10 @@
 package com.zhiw.gankapp.adapter;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
 import com.zhiw.gankapp.ui.activity.MeizhiActivity;
+import com.zhiw.gankapp.utils.ImageLoader;
 
 import android.app.Activity;
 import android.content.Context;
@@ -51,10 +50,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
     public void onBindViewHolder(MeizhiViewHolder holder, int position) {
         Gank gank = mList.get(position);
         holder.view.setTag(gank);
-        Glide.with(context)
-                .load(gank.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(holder.mImageView);
+        ImageLoader.load(context,gank.getUrl(),holder.mImageView);
 
 
     }
@@ -97,7 +93,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
 
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation((Activity) context, mImageView, context.getString(R.string.transition));
-            ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
+            ActivityCompat.startActivity(context, intent, optionsCompat.toBundle());
         }
 
     }
