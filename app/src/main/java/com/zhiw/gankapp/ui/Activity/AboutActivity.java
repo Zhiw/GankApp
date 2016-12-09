@@ -24,10 +24,13 @@ public class AboutActivity extends ToolBarActivity {
     }
 
     @Override
-    protected void initPresenter() {
+    protected void setUpView() {
         mAboutContentText.setAutoLinkMask(Linkify.ALL);
         mAboutContentText.setMovementMethod(LinkMovementMethod.getInstance());
-
     }
 
+    @Override
+    protected void setUpData() {
+
+    }
 }

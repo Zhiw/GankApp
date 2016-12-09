@@ -2,6 +2,7 @@ package com.zhiw.gankapp.http;
 
 import com.zhiw.gankapp.model.DailyGank;
 import com.zhiw.gankapp.model.GankData;
+import com.zhiw.gankapp.model.SearchResponse;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -28,5 +29,16 @@ public interface GankService {
             @Path("year") int year,
             @Path("month") int month,
             @Path("day") int day);
+
+    /**
+     * search
+     *
+     * @param keyword keyword
+     * @param page    page
+     */
+    @GET("search/query/{keyword}/category/all/count/20/page/{page}")
+    Observable<SearchResponse> search(
+            @Path("keyword") String keyword,
+            @Path("page") int page);
 
 }

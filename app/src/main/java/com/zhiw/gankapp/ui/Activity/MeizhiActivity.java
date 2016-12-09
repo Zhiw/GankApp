@@ -44,14 +44,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new MeizhiPresenter(this, this);
-        mPresenter.init();
-
-    }
-
-    @Override
-    public void initView() {
+    protected void setUpView() {
         String url = getIntent().getStringExtra(Constants.URL);
         date = DateUtil.parseDate(getIntent().getStringExtra(Constants.DATE));
 
@@ -80,8 +73,13 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
             }
         });
-
     }
+
+    @Override
+    protected void setUpData() {
+        mPresenter = new MeizhiPresenter(this, this);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

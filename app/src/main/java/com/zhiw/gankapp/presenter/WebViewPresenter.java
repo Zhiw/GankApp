@@ -6,6 +6,7 @@ import com.zhiw.gankapp.ui.view.IWebView;
 import android.content.Context;
 import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -49,15 +50,16 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
 
     }
 
-    class MyWebViewClient extends WebViewClient {
+    private class MyWebViewClient extends WebViewClient {
+
         @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            view.loadUrl(request.getUrl().toString());
             return true;
         }
     }
 
-    class MyWebChromeClient extends WebChromeClient {
+    private class MyWebChromeClient extends WebChromeClient {
         @Override
         public void onProgressChanged(android.webkit.WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);

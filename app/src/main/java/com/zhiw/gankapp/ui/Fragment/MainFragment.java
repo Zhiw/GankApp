@@ -87,26 +87,7 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new MainFragmentPresenter(fragmentActivity, this);
-        mPresenter.init();
-
-    }
-
-    @Override
-    protected void lazyLoad() {
-        if (!isInitView || !isVisible || isLoadOnce) {
-            return;
-        }
-        mSwipeRefreshLayout.post(() -> {
-            mSwipeRefreshLayout.setRefreshing(true);
-            getData();
-            isInitView = false;
-        });
-    }
-
-    @Override
-    public void initView() {
+    protected void setUpView() {
         mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
@@ -124,8 +105,28 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
         }
 
         mRecyclerView.setListener(this::getData);
+    }
+
+    @Override
+    protected void setUpData() {
+        mPresenter = new MainFragmentPresenter(fragmentActivity, this);
+
 
     }
+
+
+    @Override
+    protected void lazyLoad() {
+        if (!isInitView || !isVisible || isLoadOnce) {
+            return;
+        }
+        mSwipeRefreshLayout.post(() -> {
+            mSwipeRefreshLayout.setRefreshing(true);
+            getData();
+            isInitView = false;
+        });
+    }
+
 
 
     @Override

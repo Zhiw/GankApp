@@ -36,17 +36,17 @@ public class ReadingFragment extends BaseFragment implements IWebView {
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new WebViewPresenter(fragmentActivity, this);
-        mPresenter.initWebSettings(mReadingWebView);
-        mPresenter.loadWeb(mReadingWebView, mUrl);
+    protected void setUpView() {
 
     }
 
     @Override
-    public void initView() {
-
+    protected void setUpData() {
+        mPresenter = new WebViewPresenter(fragmentActivity, this);
+        mPresenter.initWebSettings(mReadingWebView);
+        mPresenter.loadWeb(mReadingWebView, mUrl);
     }
+
 
     @Override
     public void showProgress(int progress) {

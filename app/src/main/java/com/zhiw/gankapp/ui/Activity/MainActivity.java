@@ -7,16 +7,21 @@ import com.zhiw.gankapp.ui.fragment.CategoryFragment;
 import com.zhiw.gankapp.ui.fragment.DailyFragment;
 import com.zhiw.gankapp.ui.fragment.ReadingFragment;
 
-import android.os.Bundle;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,15 +42,13 @@ public class MainActivity extends BaseActivity
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        init();
-
+    protected int getLayoutResId() {
+        return R.layout.activity_main;
     }
 
-    private void init() {
+    @Override
+    protected void setUpView() {
+        setSupportActionBar(mToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
@@ -63,17 +66,10 @@ public class MainActivity extends BaseActivity
         mLastItemId = menuItem.getItemId();
         setTitle(menuItem.getTitle());
         mCurrentFragment = fragment;
-
-
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected void initPresenter() {
+    protected void setUpData() {
 
     }
 
@@ -91,6 +87,28 @@ public class MainActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView)
+                MenuItemCompat.getActionView(searchItem);
+        searchView.setQueryHint("请输入搜索关键词");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                SearchResultActivity.openActivity(MainActivity.this, query);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (inputMethodManager != null) {
+                    inputMethodManager.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+                }
+                searchView.clearFocus();
+                searchView.setVisibility(View.GONE);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         return true;
     }
 
@@ -112,7 +130,7 @@ public class MainActivity extends BaseActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (mLastItemId != id) {
             if (id == R.id.nav_home) {
@@ -126,10 +144,6 @@ public class MainActivity extends BaseActivity
             }else if (id==R.id.nav_reading){
                 BaseFragment fragment = createFragment(ReadingFragment.class);
                 switchFragment(fragment);
-
-            } else if (id == R.id.nav_share) {
-
-            } else if (id == R.id.nav_send) {
 
             }
             mLastItemId = id;

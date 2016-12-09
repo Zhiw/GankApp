@@ -26,7 +26,4 @@ public class BasePresenter<T extends BaseView> {
                 .create(GankService.class);
     }
 
-    public void init() {
-        viewImpl.initView();
-    }
 }

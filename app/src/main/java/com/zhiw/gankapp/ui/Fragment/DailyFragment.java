@@ -48,20 +48,18 @@ public class DailyFragment extends BaseFragment implements DailyListView {
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new DailyListPresenter(fragmentActivity, this);
-        mPresenter.init();
-
-    }
-
-    @Override
-    public void initView() {
+    protected void setUpView() {
         mAdapter = new DailyGankListAdapter(fragmentActivity);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(fragmentActivity));
         mRecyclerView.setAdapter(mAdapter);
-        mPresenter.getData();
-
     }
+
+    @Override
+    protected void setUpData() {
+        mPresenter = new DailyListPresenter(fragmentActivity, this);
+        mPresenter.getData();
+    }
+
 
 
     @Override

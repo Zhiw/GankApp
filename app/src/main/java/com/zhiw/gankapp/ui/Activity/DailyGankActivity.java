@@ -29,25 +29,21 @@ public class DailyGankActivity extends ToolBarActivity implements DailyGankView 
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new DailyGankPresenter(this, this);
-        mPresenter.init();
-
+    protected void setUpView() {
+        mDailyGankRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new DailyGankAdapter(this);
+        mDailyGankRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
-    public void initView() {
+    protected void setUpData() {
+        mPresenter = new DailyGankPresenter(this, this);
         String publishedTime = getIntent().getStringExtra(Constants.DATE);
         setTitle(DateUtil.parseDate(publishedTime));
         int[] date = DateUtil.getDate(publishedTime);
         mPresenter.getDailyGank(date);
-
-        mDailyGankRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new DailyGankAdapter(this);
-        mDailyGankRecyclerView.setAdapter(mAdapter);
-
-
     }
+
 
 
     @Override

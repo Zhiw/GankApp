@@ -68,7 +68,7 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
 
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation((Activity) context, v, context.getString(R.string.transition));
-            ActivityCompat.startActivity((Activity) context, intent, optionsCompat.toBundle());
+            ActivityCompat.startActivity(context, intent, optionsCompat.toBundle());
         });
 
         holder.mCardView.setOnClickListener(v -> {

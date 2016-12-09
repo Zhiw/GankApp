@@ -48,13 +48,7 @@ public class CategoryFragment extends BaseFragment {
     }
 
     @Override
-    protected void initPresenter() {
-        init();
-
-    }
-
-
-    private void init(){
+    protected void setUpView() {
         List<Fragment> fragmentList = new ArrayList<>();
         for (String title : titles) {
             fragmentList.add(MainFragment.newInstance(title));
@@ -66,4 +60,10 @@ public class CategoryFragment extends BaseFragment {
 
         mTabLayout.setupWithViewPager(mViewPager);
     }
+
+    @Override
+    protected void setUpData() {
+
+    }
+
 }

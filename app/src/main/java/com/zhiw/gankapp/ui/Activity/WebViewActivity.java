@@ -35,21 +35,21 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new WebViewPresenter(this, this);
-        mPresenter.initWebSettings(mWebView);
-
-    }
-
-    @Override
-    public void initView() {
-
+    protected void setUpView() {
         url = getIntent().getStringExtra(Constants.URL);
         String des = getIntent().getStringExtra(Constants.DES);
         setTitle(des);
+    }
+
+    @Override
+    protected void setUpData() {
+        mPresenter = new WebViewPresenter(this, this);
+        mPresenter.initWebSettings(mWebView);
         mPresenter.loadWeb(mWebView, url);
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

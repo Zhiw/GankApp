@@ -28,14 +28,22 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutResId(), container, false);
-        ButterKnife.bind(this,view);
-        initPresenter();
+        ButterKnife.bind(this, view);
+        init();
+        setUpView();
+        setUpData();
         return view;
     }
 
     protected abstract int getLayoutResId();
 
-    protected abstract void initPresenter();
+    protected abstract void setUpView();
+
+    protected abstract void setUpData();
+
+    protected void init() {
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

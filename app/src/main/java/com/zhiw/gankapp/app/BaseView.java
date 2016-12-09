@@ -8,5 +8,4 @@ package com.zhiw.gankapp.app;
 
 public interface BaseView {
 
-    void initView();
 }
