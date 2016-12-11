@@ -8,6 +8,9 @@ import com.zhiw.gankapp.ui.activity.WebViewActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.TextAppearanceSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +47,13 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     @Override
     public void onBindViewHolder(ResultViewHolder holder, int position) {
         SearchResult searchResult = mSearchResultList.get(position);
-        holder.mTitleText.setText(searchResult.getDesc());
+
+        String type = "(" + searchResult.getType() + ")";
+        SpannableString spannableString = new SpannableString(type);
+        spannableString.setSpan(new TextAppearanceSpan(mContext, R.style.ViaTextAppearance), 0, type.length(), 0);
+        SpannableStringBuilder builder = new SpannableStringBuilder(searchResult.getDesc()).append(spannableString);
+        holder.mTitleText.setText(builder.subSequence(0, builder.length()));
+
         holder.mTitleText.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, WebViewActivity.class);
             intent.putExtra(Constants.URL, searchResult.getUrl());

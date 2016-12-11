@@ -15,17 +15,15 @@ import com.zhiw.gankapp.ui.widget.RecyclerViewDivider;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +35,7 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
 
     @Bind(R.id.recycler_view) MyRecyclerView mRecyclerView;
     @Bind(R.id.swipe_refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
 
     private String type;
     private MainFragmentPresenter mPresenter;
@@ -46,8 +45,6 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
 
     private int page = 1;
     private boolean isRefresh;
-    private boolean isInitView = false;
-    private boolean isLoadOnce = false;
 
 
     public MainFragment() {
@@ -67,19 +64,10 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getString(ARG_PARAM);
-            Logger.d(type);
+            Logger.d("create "+type);
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
-        super.onCreateView(inflater, container, savedInstanceState);
-        isInitView = true;
-        lazyLoad();
-        return super.onCreateView(inflater, container, savedInstanceState);
-
-    }
 
     @Override
     protected int getLayoutResId() {
@@ -88,12 +76,14 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
 
     @Override
     protected void setUpView() {
-        mSwipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
+        mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(fragmentActivity,R.color.colorAccent));
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         if (type.equals(Constants.TYPE_MEIZHI)) {
-            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-            mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+//            StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+//            mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity);
+            mRecyclerView.setLayoutManager(linearLayoutManager);
             meizhiAdapter = new MeizhiAdapter(fragmentActivity);
             mRecyclerView.setAdapter(meizhiAdapter);
         } else {
@@ -104,28 +94,21 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
             mRecyclerView.setAdapter(gankAdapter);
         }
 
-        mRecyclerView.setListener(this::getData);
+        mRecyclerView.setLoadMoreListener(this::getData);
     }
 
     @Override
     protected void setUpData() {
         mPresenter = new MainFragmentPresenter(fragmentActivity, this);
-
-
     }
-
 
     @Override
-    protected void lazyLoad() {
-        if (!isInitView || !isVisible || isLoadOnce) {
-            return;
-        }
-        mSwipeRefreshLayout.post(() -> {
-            mSwipeRefreshLayout.setRefreshing(true);
-            getData();
-            isInitView = false;
-        });
+    protected void loadData() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        getData();
+
     }
+
 
 
 
@@ -138,8 +121,8 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
 
     @Override
     public void showListView(List<Gank> list) {
+        mProgressBar.setVisibility(View.GONE);
         page++;
-        isLoadOnce = true;
         if (isRefresh) {
             meizhiAdapter.refreshData(list);
             isRefresh = false;
@@ -151,8 +134,8 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
 
     @Override
     public void refreshGankList(List<Gank> list) {
+        mProgressBar.setVisibility(View.GONE);
         page++;
-        isLoadOnce = true;
         if (isRefresh) {
             gankAdapter.refreshData(list);
             isRefresh = false;
