@@ -1,5 +1,8 @@
 package com.zhiw.gankapp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ClassName: Gank
  * Desc:
@@ -8,16 +11,6 @@ package com.zhiw.gankapp.model;
 
 public class Gank {
 
-    /**
-     * createdAt : 2016-06-12T09:31:47.329Z
-     * desc : 直接看图，，不用看描述。
-     * publishedAt : 2016-06-12T12:04:04.308Z
-     * source : web
-     * type : 福利
-     * url : http://ww4.sinaimg.cn/mw690/9844520fjw1f4fqribdg1j21911w0kjn.jpg
-     * used : true
-     * who : 龙龙童鞋
-     */
 
     private String createdAt;
     private String desc;
@@ -27,6 +20,7 @@ public class Gank {
     private String url;
     private boolean used;
     private String who;
+    private List<String> images = new ArrayList<>();
 
 
     public String getCreatedAt() {
@@ -91,5 +85,13 @@ public class Gank {
 
     public void setWho(String who) {
         this.who = who;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

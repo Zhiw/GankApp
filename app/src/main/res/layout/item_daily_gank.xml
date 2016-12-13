@@ -4,48 +4,52 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:clickable="true"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:clickable="true">
 
     <TextView
             android:id="@+id/tv_category"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:visibility="gone"
-            tools:text="Category"
-            tools:visibility="visible" />
+            tools:text="Category"/>
 
 
     <LinearLayout
             android:id="@+id/ll_gank_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
+            android:padding="16dp"
             android:foreground="?attr/selectableItemBackground"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="8dp"
     >
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="●" />
+                android:text="●"/>
 
         <android.support.v4.widget.Space
                 android:layout_width="6dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                tools:text="文字" />
+                tools:text="文字"/>
     </LinearLayout>
+    <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxHeight="200dp"
+            android:scaleType="center"/>
 </LinearLayout>

@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -67,7 +66,7 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Gank gank = mGankList.get(position);
         if (position == 0) {
-            ((MeizhiViewHolder) holder).mTitle.setText(gank.getType());
+            ((MeizhiViewHolder) holder).mTitleText.setText(gank.getType());
             
             ImageLoader.load(context,gank.getUrl(),((MeizhiViewHolder) holder).mImageView);
 
@@ -84,20 +83,24 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         } else {
             boolean isTheSameCategory = mGankList.get(position - 1).getType().equals(mGankList.get(position).getType());
             if (isTheSameCategory) {
-                ((GankViewHolder) holder).mTvCategory.setVisibility(View.GONE);
+                ((GankViewHolder) holder).mCategoryText.setVisibility(View.GONE);
             } else {
-                ((GankViewHolder) holder).mTvCategory.setVisibility(View.VISIBLE);
+                ((GankViewHolder) holder).mCategoryText.setVisibility(View.VISIBLE);
 
             }
-            ((GankViewHolder) holder).mTvCategory.setText(gank.getType());
+            ((GankViewHolder) holder).mCategoryText.setText(gank.getType());
+
+            if (gank.getImages().size() > 0) {
+                ImageLoader.load(context, gank.getImages().get(0), ((GankViewHolder) holder).mImage);
+            }
 
             String who = "(" + gank.getWho() + ")";
             SpannableString spannableString = new SpannableString(who);
             spannableString.setSpan(new TextAppearanceSpan(context, R.style.ViaTextAppearance), 0, who.length(), 0);
             SpannableStringBuilder builder = new SpannableStringBuilder(gank.getDesc()).append(spannableString);
-            ((GankViewHolder) holder).mTvTitle.setText(builder.subSequence(0, builder.length()));
+            ((GankViewHolder) holder).mTitleText.setText(builder.subSequence(0, builder.length()));
 
-            ((GankViewHolder) holder).mTvTitle.setOnClickListener(v -> {
+            ((GankViewHolder) holder).mTitleText.setOnClickListener(v -> {
                 Intent intent = new Intent(context, WebViewActivity.class);
                 intent.putExtra(Constants.URL, gank.getUrl());
                 intent.putExtra(Constants.DES, gank.getDesc());
@@ -146,7 +149,7 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.meizhi) ImageView mImageView;
-        @Bind(R.id.gank_title) TextView mTitle;
+        @Bind(R.id.gank_title) TextView mTitleText;
 
         public MeizhiViewHolder(View itemView) {
             super(itemView);
@@ -157,11 +160,11 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     class GankViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.tv_category)
-        TextView mTvCategory;
+        TextView mCategoryText;
         @Bind(R.id.tv_title)
-        TextView mTvTitle;
-        @Bind(R.id.ll_gank_parent)
-        LinearLayout mLlGankParent;
+        TextView mTitleText;
+        @Bind(R.id.image)
+        ImageView mImage;
 
         public GankViewHolder(View itemView) {
             super(itemView);
