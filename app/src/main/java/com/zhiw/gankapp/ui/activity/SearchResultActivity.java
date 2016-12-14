@@ -3,8 +3,7 @@ package com.zhiw.gankapp.ui.activity;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.adapter.SearchResultAdapter;
 import com.zhiw.gankapp.app.ToolBarActivity;
-import com.zhiw.gankapp.http.GankRetrofit;
-import com.zhiw.gankapp.http.GankService;
+import com.zhiw.gankapp.http.GankDataResource;
 import com.zhiw.gankapp.model.SearchResponse;
 import com.zhiw.gankapp.ui.widget.MyRecyclerView;
 import com.zhiw.gankapp.ui.widget.RecyclerViewDivider;
@@ -18,6 +17,7 @@ import android.widget.ProgressBar;
 
 import butterknife.Bind;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -32,6 +32,7 @@ public class SearchResultActivity extends ToolBarActivity {
     private int mPage = 1;
 
     private SearchResultAdapter mAdapter;
+    private Subscription mSubscription;
 
     public static void openActivity(Context context, String keyWord) {
         Intent intent = new Intent(context, SearchResultActivity.class);
@@ -65,8 +66,7 @@ public class SearchResultActivity extends ToolBarActivity {
     @Override
     protected void setUpData() {
         mProgressBar.setVisibility(View.VISIBLE);
-        GankRetrofit.getRetrofit()
-                .create(GankService.class)
+        mSubscription = new GankDataResource()
                 .search(mKeyWord, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -94,4 +94,9 @@ public class SearchResultActivity extends ToolBarActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mSubscription.unsubscribe();
+    }
 }

@@ -1,8 +1,9 @@
 package com.zhiw.gankapp.presenter;
 
-import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.app.BasePresenter;
 import com.zhiw.gankapp.config.Constants;
+import com.zhiw.gankapp.http.GankApi;
+import com.zhiw.gankapp.http.GankDataResource;
 import com.zhiw.gankapp.ui.view.MainFragmentView;
 
 import android.content.Context;
@@ -18,16 +19,18 @@ import rx.schedulers.Schedulers;
 
 public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
 
+    private GankApi mGankApi;
+
     public MainFragmentPresenter(Context context, MainFragmentView view) {
         super(context, view);
+        mGankApi = new GankDataResource();
     }
 
     public void getMeizhi(int page) {
-        gank.getGank(Constants.TYPE_MEIZHI, 10, page)
+        mGankApi.getGank(Constants.TYPE_MEIZHI, Constants.COUNT, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
-                    Logger.d("success");
                     viewImpl.showProgress(false);
                     viewImpl.showListView(gankData.getResults());
                 });
@@ -37,7 +40,7 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
 
     public void getGank(String type, int page) {
 
-        gank.getGank(type, 10, page)
+        mGankApi.getGank(type, Constants.COUNT, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {

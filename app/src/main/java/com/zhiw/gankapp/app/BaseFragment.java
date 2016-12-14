@@ -1,6 +1,8 @@
 package com.zhiw.gankapp.app;
 
 
+import com.zhiw.gankapp.utils.SnackbarUtil;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,8 +17,10 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements BaseView {
     public FragmentActivity fragmentActivity;
+
+    private ViewGroup mRootView;
 
 
     public BaseFragment() {
@@ -29,6 +33,7 @@ public abstract class BaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
+        mRootView = (ViewGroup) view.findViewById(android.R.id.content);
         init();
         setUpView();
         setUpData();
@@ -55,6 +60,11 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void error(String msg) {
+        SnackbarUtil.showSnackbar(mRootView, msg);
     }
 
     public void startActivity(Class<?> aClass) {

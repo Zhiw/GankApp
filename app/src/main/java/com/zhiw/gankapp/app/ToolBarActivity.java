@@ -1,16 +1,18 @@
 package com.zhiw.gankapp.app;
 
 import com.zhiw.gankapp.R;
+import com.zhiw.gankapp.utils.SnackbarUtil;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 
 import butterknife.Bind;
 
-public abstract class ToolBarActivity extends BaseActivity {
+public abstract class ToolBarActivity extends BaseActivity implements BaseView {
 
     private boolean isShow = true;
 
@@ -18,6 +20,8 @@ public abstract class ToolBarActivity extends BaseActivity {
     Toolbar mToolbar;
     @Bind(R.id.app_bar)
     AppBarLayout mAppBar;
+
+    private FrameLayout mRootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,8 @@ public abstract class ToolBarActivity extends BaseActivity {
             mToolbar.setNavigationOnClickListener(view -> finish());
         }
 
+        mRootView = (FrameLayout) findViewById(android.R.id.content);
+
     }
 
     protected void hideOrShowToolBar() {
@@ -42,5 +48,10 @@ public abstract class ToolBarActivity extends BaseActivity {
                 .start();
 
         isShow = !isShow;
+    }
+
+    @Override
+    public void error(String msg) {
+        SnackbarUtil.showSnackbar(mRootView, msg);
     }
 }

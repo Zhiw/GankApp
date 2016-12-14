@@ -1,8 +1,5 @@
 package com.zhiw.gankapp.app;
 
-import com.zhiw.gankapp.http.GankRetrofit;
-import com.zhiw.gankapp.http.GankService;
-
 import android.content.Context;
 
 /**
@@ -17,13 +14,10 @@ public class BasePresenter<T extends BaseView> {
 
     public T viewImpl;
 
-    public GankService gank;
 
     public BasePresenter(Context context, T view) {
         this.context = context;
         this.viewImpl = view;
-        gank = GankRetrofit.getRetrofit()
-                .create(GankService.class);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.zhiw.gankapp.presenter;
 
 import com.zhiw.gankapp.app.BasePresenter;
+import com.zhiw.gankapp.http.GankApi;
+import com.zhiw.gankapp.http.GankDataResource;
 import com.zhiw.gankapp.ui.view.DailyGankView;
 
 import android.content.Context;
@@ -16,8 +18,11 @@ import rx.schedulers.Schedulers;
 
 public class DailyGankPresenter extends BasePresenter<DailyGankView> {
 
+    private GankApi mGankApi;
+
     public DailyGankPresenter(Context context, DailyGankView view) {
         super(context, view);
+        mGankApi = new GankDataResource();
     }
 
     public void getDailyGank(int[] date) {
@@ -25,7 +30,7 @@ public class DailyGankPresenter extends BasePresenter<DailyGankView> {
         int month = date[1];
         int day = date[2];
 
-        gank.getDailyData(year, month, day)
+        mGankApi.getDailyData(year, month, day)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(dailyGank -> {

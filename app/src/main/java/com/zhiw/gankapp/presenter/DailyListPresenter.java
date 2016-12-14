@@ -2,8 +2,8 @@ package com.zhiw.gankapp.presenter;
 
 import com.zhiw.gankapp.app.BasePresenter;
 import com.zhiw.gankapp.config.Constants;
-import com.zhiw.gankapp.http.GankRetrofit;
-import com.zhiw.gankapp.http.GankService;
+import com.zhiw.gankapp.http.GankApi;
+import com.zhiw.gankapp.http.GankDataResource;
 import com.zhiw.gankapp.model.GankData;
 import com.zhiw.gankapp.ui.view.DailyListView;
 
@@ -11,6 +11,7 @@ import android.content.Context;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -20,22 +21,30 @@ import rx.schedulers.Schedulers;
  */
 public class DailyListPresenter extends BasePresenter<DailyListView> {
 
+    private GankApi mGankApi;
+
     public DailyListPresenter(Context context, DailyListView view) {
         super(context, view);
+        mGankApi = new GankDataResource();
     }
 
 
     public void getData() {
-        Observable.zip(GankRetrofit.getRetrofit().create(GankService.class)
-                        .getGank(Constants.TYPE_MEIZHI, 10, 1), GankRetrofit.getRetrofit().create(GankService.class)
-                        .getGank(Constants.TYPE_VIDEO, 10, 1)
-                , this::getDataFromMeizhiAndVideo)
+        Observable.zip(
+                mGankApi.getGank(Constants.TYPE_MEIZHI, Constants.COUNT, 1),
+                mGankApi.getGank(Constants.TYPE_VIDEO, Constants.COUNT, 1),
+                this::getDataFromMeizhiAndVideo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(gankData -> {
                     if (gankData.getResults().size() != 0) {
                         viewImpl.showProgress(false);
                         viewImpl.refreshGanData(gankData.getResults());
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        viewImpl.error("暂时无网络");
                     }
                 });
 

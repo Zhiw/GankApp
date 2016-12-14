@@ -8,6 +8,7 @@ package com.zhiw.gankapp.config;
 
 public class Constants {
 
+    public static final int COUNT = 10;
 
     public static final String TYPE_MEIZHI = "福利";
 
