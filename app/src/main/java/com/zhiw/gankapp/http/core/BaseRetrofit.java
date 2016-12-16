@@ -1,4 +1,4 @@
-package com.zhiw.gankapp.http;
+package com.zhiw.gankapp.http.core;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

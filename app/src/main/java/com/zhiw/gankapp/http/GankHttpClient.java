@@ -1,6 +1,7 @@
 package com.zhiw.gankapp.http;
 
 import com.zhiw.gankapp.App;
+import com.zhiw.gankapp.http.core.BaseHttpClient;
 import com.zhiw.gankapp.utils.NetworkUtil;
 
 import java.io.File;

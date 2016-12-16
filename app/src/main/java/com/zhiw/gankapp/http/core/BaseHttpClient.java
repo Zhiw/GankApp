@@ -1,4 +1,4 @@
-package com.zhiw.gankapp.http;
+package com.zhiw.gankapp.http.core;
 
 import java.util.concurrent.TimeUnit;
 

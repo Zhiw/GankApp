@@ -4,10 +4,12 @@ import com.zhiw.gankapp.app.BasePresenter;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.http.GankApi;
 import com.zhiw.gankapp.http.GankDataResource;
+import com.zhiw.gankapp.model.GankData;
 import com.zhiw.gankapp.ui.view.MainFragmentView;
 
 import android.content.Context;
 
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,9 +32,22 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
         mGankApi.getGank(Constants.TYPE_MEIZHI, Constants.COUNT, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(gankData -> {
-                    viewImpl.showProgress(false);
-                    viewImpl.showListView(gankData.getResults());
+                .subscribe(new Subscriber<GankData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(GankData gankData) {
+                        viewImpl.showProgress(false);
+                        viewImpl.showListView(gankData.getResults());
+                    }
                 });
 
 

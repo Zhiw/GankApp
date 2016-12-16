@@ -3,10 +3,12 @@ package com.zhiw.gankapp.presenter;
 import com.zhiw.gankapp.app.BasePresenter;
 import com.zhiw.gankapp.http.GankApi;
 import com.zhiw.gankapp.http.GankDataResource;
+import com.zhiw.gankapp.model.DailyGank;
 import com.zhiw.gankapp.ui.view.DailyGankView;
 
 import android.content.Context;
 
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -33,11 +35,22 @@ public class DailyGankPresenter extends BasePresenter<DailyGankView> {
         mGankApi.getDailyData(year, month, day)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(dailyGank -> {
-                    if (!dailyGank.isError()) {
-                        viewImpl.refreshUI(dailyGank.getResults());
+                .subscribe(new Subscriber<DailyGank>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
 
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(DailyGank dailyGank) {
+                        viewImpl.refreshUI(dailyGank.getResults());
+
+                    }
                 });
 
     }

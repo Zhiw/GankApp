@@ -10,8 +10,8 @@ import com.zhiw.gankapp.ui.view.DailyListView;
 import android.content.Context;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -36,15 +36,23 @@ public class DailyListPresenter extends BasePresenter<DailyListView> {
                 this::getDataFromMeizhiAndVideo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(gankData -> {
-                    if (gankData.getResults().size() != 0) {
-                        viewImpl.showProgress(false);
-                        viewImpl.refreshGanData(gankData.getResults());
-                    }
-                }, new Action1<Throwable>() {
+                .subscribe(new Subscriber<GankData>() {
                     @Override
-                    public void call(Throwable throwable) {
-                        viewImpl.error("暂时无网络");
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(GankData gankData) {
+                        if (gankData.getResults().size() != 0) {
+                            viewImpl.showProgress(false);
+                            viewImpl.refreshGanData(gankData.getResults());
+                        }
                     }
                 });
 

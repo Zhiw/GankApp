@@ -1,6 +1,7 @@
 package com.zhiw.gankapp.http;
 
 import com.zhiw.gankapp.config.Apis;
+import com.zhiw.gankapp.http.core.BaseRetrofit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
