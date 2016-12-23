@@ -54,7 +54,7 @@ public class CategoryFragment extends BaseFragment {
             fragmentList.add(MainFragment.newInstance(title));
         }
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(fragmentActivity.getSupportFragmentManager(), fragmentList);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(), fragmentList);
         mViewPager.setAdapter(viewPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);

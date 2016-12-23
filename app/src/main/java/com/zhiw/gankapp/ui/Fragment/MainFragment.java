@@ -1,7 +1,6 @@
 package com.zhiw.gankapp.ui.fragment;
 
 
-import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.adapter.GankAdapter;
 import com.zhiw.gankapp.adapter.MeizhiAdapter;
@@ -64,7 +63,6 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             type = getArguments().getString(ARG_PARAM);
-            Logger.d("create "+type);
         }
     }
 
@@ -114,7 +112,7 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
 
     @Override
     public void showProgress(boolean show) {
-        if (mSwipeRefreshLayout.isRefreshing()) {
+        if (mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(show);
         }
     }
