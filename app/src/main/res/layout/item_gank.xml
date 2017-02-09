@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" xmlns:tools="http://schemas.android.com/tools"
-        android:padding="8dp"
-        android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:padding="8dp"
+        android:orientation="vertical">
+    <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/primaryText"
+            tools:text="通用的Recyclerview适配器"
+    />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
         <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
+                android:id="@+id/who"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textColor="@color/primaryText"
-                android:textSize="16sp"
-                tools:text="通用的Recyclerview适配器"
+                android:layout_weight="1"
+                android:textColor="@color/secondaryText"
+                tools:text="Zhiw"
         />
 
-        <LinearLayout
-                android:layout_width="match_parent"
+        <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal">
-            <TextView
-                    android:id="@+id/who"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/secondaryText"
-                    tools:text="Zhiw"
-            />
+                android:layout_weight="1"
 
-            <TextView
-                    android:id="@+id/date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                android:textColor="@color/secondaryText"
+                tools:text="2016-06-06"
+        />
 
-                    android:textColor="@color/secondaryText"
-                    tools:text="2016-06-06"
-            />
-
-        </LinearLayout>
     </LinearLayout>
+</LinearLayout>

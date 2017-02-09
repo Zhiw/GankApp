@@ -8,5 +8,4 @@
         android:clipToPadding="false"
         android:fitsSystemWindows="true"
         android:scrollbars="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>

@@ -1,5 +1,7 @@
 package com.zhiw.gankapp.presenter;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.FutureTarget;
 import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.app.BasePresenter;
 import com.zhiw.gankapp.ui.view.MeizhiView;
@@ -10,8 +12,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.concurrent.ExecutionException;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -75,6 +80,11 @@ public class MeizhiPresenter extends BasePresenter<MeizhiView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         file -> {
+                            try {
+                                MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), name, null);
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
                             Intent i = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file));
                             context.sendBroadcast(i);
                             viewImpl.showImageResult("图片保存成功");
@@ -90,12 +100,37 @@ public class MeizhiPresenter extends BasePresenter<MeizhiView> {
         Observable.create(new Observable.OnSubscribe<File>() {
             @Override
             public void call(Subscriber<? super File> subscriber) {
-                File file = FileUtil.saveBitmap(bitmap, name);
+                File file = FileUtil.saveCacheFile(context, bitmap, name);
                 if (!file.exists()) {
                     subscriber.onError(new Exception("failed"));
                 } else {
                     subscriber.onNext(file);
                 }
+
+
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(file -> {
+                    ShareUtil.shareImage(context, Uri.fromFile(file), "分享妹纸");
+                });
+    }
+
+    public void shareImage(String url) {
+        Observable.create(new Observable.OnSubscribe<File>() {
+            @Override
+            public void call(Subscriber<? super File> subscriber) {
+                FutureTarget<File> target = Glide.with(context)
+                        .load(url)
+                        .downloadOnly(300, 300);
+
+                try {
+                    File cacheFile = target.get();
+                    subscriber.onNext(cacheFile);
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

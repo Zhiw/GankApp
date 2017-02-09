@@ -7,4 +7,4 @@
           android:padding="10dp"
           android:textSize="16sp"
           android:textColor="@color/primaryText"
-          tools:text="子线程到底能不能更新UI" />
+          tools:text="子线程到底能不能更新UI"/>

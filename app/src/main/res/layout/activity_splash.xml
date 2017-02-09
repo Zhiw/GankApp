@@ -5,22 +5,24 @@
         android:id="@+id/activity_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical"
+        android:gravity="center"
         tools:context="com.zhiw.gankapp.ui.activity.SplashActivity">
 
 
-        <ImageView android:layout_width="80dp"
-                   android:layout_height="80dp"
-                   android:layout_gravity="center"
-                   android:background="@mipmap/ic_launcher"/>
+    <ImageView android:layout_width="80dp"
+               android:layout_height="80dp"
+               android:layout_gravity="center"
+               android:background="@mipmap/ic_launcher"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:layout_gravity="center"
-                android:text="每日分享技术干货"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="4dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:text="@string/slogan"/>
 
 
 </LinearLayout>

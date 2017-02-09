@@ -36,6 +36,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     private Bitmap mBitmap;
 
     private String date;
+    private String mUrl;
 
 
     @Override
@@ -45,12 +46,12 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     @Override
     protected void setUpView() {
-        String url = getIntent().getStringExtra(Constants.URL);
+        mUrl = getIntent().getStringExtra(Constants.URL);
         date = DateUtil.parseDate(getIntent().getStringExtra(Constants.DATE));
 
         mAttacher = new PhotoViewAttacher(meizhi);
         Glide.with(this)
-                .load(url)
+                .load(mUrl)
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
@@ -103,6 +104,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
                 } else {
                     mPresenter.downloadImage(mBitmap, date, 1);
                 }
+//                mPresenter.shareImage(mUrl);
                 break;
 
         }

@@ -6,15 +6,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
         app:cardCornerRadius="4dp"
-        app:cardElevation="2dp"
->
+        app:cardElevation="2dp">
     <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
             android:maxHeight="300dp"
             android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:transitionName="@string/transition"
     />
 
