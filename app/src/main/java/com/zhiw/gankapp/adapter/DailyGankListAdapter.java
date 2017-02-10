@@ -36,11 +36,11 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
 
 
     private List<Gank> mList;
-    private Context context;
+    private Context mContext;
 
     public DailyGankListAdapter(Context context) {
         mList = new ArrayList<>();
-        this.context = context;
+        this.mContext = context;
     }
 
     @Override
@@ -52,26 +52,24 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
     @Override
     public void onBindViewHolder(DailyGankViewHolder holder, int position) {
         Gank gank = mList.get(position);
-        ImageLoader.load(context,gank.getUrl(),holder.mMeizhi);
+        ImageLoader.load(mContext,gank.getUrl(),holder.mMeizhi);
 
-        holder.mDateText.setText(gank.getDesc());
-        holder.mDateText.setText(DateUtil.parseDate(gank.getPublishedAt()));
-        holder.mDescText.setText(gank.getDesc());
+        holder.mDescText.setText(DateUtil.parseDate(gank.getPublishedAt())+"\n"+gank.getDesc());
 
         holder.mMeizhi.setOnClickListener(v -> {
-            Intent intent = new Intent(context, MeizhiActivity.class);
+            Intent intent = new Intent(mContext, MeizhiActivity.class);
             intent.putExtra(Constants.URL, gank.getUrl());
             intent.putExtra(Constants.DATE, gank.getPublishedAt());
 
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation((Activity) context, v, context.getString(R.string.transition));
-            ActivityCompat.startActivity(context, intent, optionsCompat.toBundle());
+                    .makeSceneTransitionAnimation((Activity) mContext, v, mContext.getString(R.string.transition));
+            ActivityCompat.startActivity(mContext, intent, optionsCompat.toBundle());
         });
 
         holder.mCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, DailyGankActivity.class);
+            Intent intent = new Intent(mContext, DailyGankActivity.class);
             intent.putExtra(Constants.DATE,gank.getPublishedAt());
-            context.startActivity(intent);
+            mContext.startActivity(intent);
 
         });
 
@@ -97,7 +95,6 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
     class DailyGankViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.card_view) CardView mCardView;
         @Bind(R.id.meizhi) ImageView mMeizhi;
-        @Bind(R.id.tv_date) TextView mDateText;
         @Bind(R.id.tv_desc) TextView mDescText;
 
         DailyGankViewHolder(View itemView) {

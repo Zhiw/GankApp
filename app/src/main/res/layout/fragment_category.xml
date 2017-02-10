@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:tabIndicatorColor="@android:color/white"
+            app:tabIndicatorColor="@color/colorAccent"
             app:tabTextColor="@color/white_70"
             app:tabSelectedTextColor="@android:color/white"
             app:tabMode="scrollable"
