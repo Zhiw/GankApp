@@ -3,7 +3,6 @@ package com.zhiw.gankapp;
 import com.orhanobut.logger.AndroidLogTool;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
-import com.squareup.leakcanary.LeakCanary;
 
 import android.app.Application;
 import android.content.Context;
@@ -28,12 +27,6 @@ public class App extends Application {
                 .logLevel(LogLevel.FULL)        // default LogLevel.FULL
                 .methodOffset(2)                // default 0
                 .logTool(new AndroidLogTool()); // custom log tool, optional
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
     }
 
     public static Context getContext() {

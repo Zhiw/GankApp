@@ -25,11 +25,15 @@ import butterknife.Bind;
  */
 public class DailyFragment extends BaseFragment implements DailyListView {
 
-    @Bind(R.id.recycler_view) MyRecyclerView mRecyclerView;
-    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
+    @Bind(R.id.recycler_view)
+    MyRecyclerView mRecyclerView;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
 
     private DailyListPresenter mPresenter;
     private DailyGankListAdapter mAdapter;
+
+    private int mPage = 1;
 
 
     public DailyFragment() {
@@ -52,19 +56,26 @@ public class DailyFragment extends BaseFragment implements DailyListView {
         mAdapter = new DailyGankListAdapter(fragmentActivity);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(fragmentActivity));
         mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.setLoadMoreListener(() -> mPresenter.getData(mPage));
     }
 
     @Override
     protected void setUpData() {
         mPresenter = new DailyListPresenter(fragmentActivity, this);
-        mPresenter.getData();
+        mPresenter.getData(mPage);
     }
-
 
 
     @Override
     public void refreshGanData(List<Gank> list) {
-        mAdapter.refreshData(list);
+        if (mPage == 1) {
+            mAdapter.refreshData(list);
+        } else {
+            mAdapter.addData(list);
+        }
+
+        mPage++;
 
     }
 

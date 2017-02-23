@@ -40,10 +40,10 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
     private MainFragmentPresenter mPresenter;
 
     private MeizhiAdapter meizhiAdapter;
-    private GankAdapter gankAdapter;
+    private GankAdapter mGankAdapter;
 
-    private int page = 1;
-    private boolean isRefresh;
+    private int mPage = 1;
+    private boolean mIsRefresh;
 
 
     public MainFragment() {
@@ -88,8 +88,8 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(fragmentActivity, LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearLayoutManager);
             mRecyclerView.addItemDecoration(new RecyclerViewDivider(fragmentActivity));
-            gankAdapter = new GankAdapter(fragmentActivity, null);
-            mRecyclerView.setAdapter(gankAdapter);
+            mGankAdapter = new GankAdapter(fragmentActivity, null);
+            mRecyclerView.setAdapter(mGankAdapter);
         }
 
         mRecyclerView.setLoadMoreListener(this::getData);
@@ -120,10 +120,10 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
     @Override
     public void showListView(List<Gank> list) {
         mProgressBar.setVisibility(View.GONE);
-        page++;
-        if (isRefresh) {
+        mPage++;
+        if (mIsRefresh) {
             meizhiAdapter.refreshData(list);
-            isRefresh = false;
+            mIsRefresh = false;
         } else {
             meizhiAdapter.addData(list);
         }
@@ -133,27 +133,27 @@ public class MainFragment extends BaseTabFragment implements MainFragmentView, S
     @Override
     public void refreshGankList(List<Gank> list) {
         mProgressBar.setVisibility(View.GONE);
-        page++;
-        if (isRefresh) {
-            gankAdapter.refreshData(list);
-            isRefresh = false;
+        mPage++;
+        if (mIsRefresh) {
+            mGankAdapter.refreshData(list);
+            mIsRefresh = false;
         } else {
-            gankAdapter.addData(list);
+            mGankAdapter.addData(list);
         }
     }
 
     @Override
     public void onRefresh() {
-        isRefresh = true;
-        page = 1;
+        mIsRefresh = true;
+        mPage = 1;
         getData();
     }
 
     private void getData() {
         if (type.equals(Constants.TYPE_MEIZHI)) {
-            mPresenter.getMeizhi(page);
+            mPresenter.getMeizhi(mPage);
         } else {
-            mPresenter.getGank(type, page);
+            mPresenter.getGank(type, mPage);
         }
     }
 }

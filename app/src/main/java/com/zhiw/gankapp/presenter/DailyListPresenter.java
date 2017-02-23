@@ -29,10 +29,10 @@ public class DailyListPresenter extends BasePresenter<DailyListView> {
     }
 
 
-    public void getData() {
+    public void getData(int page) {
         Observable.zip(
-                mGankApi.getGank(Constants.TYPE_MEIZHI, Constants.COUNT, 1),
-                mGankApi.getGank(Constants.TYPE_VIDEO, Constants.COUNT, 1),
+                mGankApi.getGank(Constants.TYPE_MEIZHI, Constants.COUNT, page),
+                mGankApi.getGank(Constants.TYPE_VIDEO, Constants.COUNT, page),
                 this::getDataFromMeizhiAndVideo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
