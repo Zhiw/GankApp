@@ -49,7 +49,7 @@ dependencies {
         @Override
         void execute(Task task) {
             if (task.name.contains("lint")//如果instant run不生效，把clean这行干掉
-                    || task.name.equals("clean")//项目中有用到aidl则不可以舍弃这个任务
+                    // 项目中有用到aidl则不可以舍弃这个任务
                     || task.name.contains("Aidl")//用不到测试的时候就可以先关闭
                     || task.name.contains("mockableAndroidJar")
                     || task.name.contains("UnitTest")

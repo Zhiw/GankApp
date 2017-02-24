@@ -7,14 +7,11 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 
 import butterknife.Bind;
 
 public abstract class ToolBarActivity extends BaseActivity implements BaseView {
-
-    private boolean isShow = true;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -41,14 +38,6 @@ public abstract class ToolBarActivity extends BaseActivity implements BaseView {
 
     }
 
-    protected void hideOrShowToolBar() {
-        mAppBar.animate()
-                .translationY(isShow ? -mAppBar.getHeight() : 0)
-                .setInterpolator(new DecelerateInterpolator(2))
-                .start();
-
-        isShow = !isShow;
-    }
 
     @Override
     public void error(String msg) {

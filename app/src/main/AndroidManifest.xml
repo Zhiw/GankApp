@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".ui.activity.MeizhiActivity"
                   android:screenOrientation="portrait"
+                  android:theme="@style/AppTheme.NoActionBar"
         >
         </activity>
         <activity android:name=".ui.activity.WebViewActivity"
