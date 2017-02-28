@@ -9,26 +9,40 @@ import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.presenter.MeizhiPresenter;
 import com.zhiw.gankapp.ui.view.MeizhiView;
 import com.zhiw.gankapp.utils.DateUtil;
+import com.zhiw.gankapp.utils.Measure;
 import com.zhiw.gankapp.utils.SnackbarUtil;
 
 import android.Manifest;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import butterknife.Bind;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
+
     private static final int REQUEST_CODE_WRITE_STORAGE = 757;
 
-    @Bind(R.id.meizhi) ImageView meizhi;
+    @Bind(R.id.app_bar)
+    AppBarLayout mAppBar;
+    @Bind(R.id.meizhi)
+    ImageView meizhi;
+    @Bind(R.id.photo_layout)
+    LinearLayout mPhotoBackground;
 
 
     MeizhiPresenter mPresenter;
@@ -36,7 +50,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     private Bitmap mBitmap;
 
     private String date;
-    private String mUrl;
+    private boolean fullScreenMode;
 
 
     @Override
@@ -46,12 +60,12 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     @Override
     protected void setUpView() {
-        mUrl = getIntent().getStringExtra(Constants.URL);
+        String url = getIntent().getStringExtra(Constants.URL);
         date = DateUtil.parseDate(getIntent().getStringExtra(Constants.DATE));
 
         mAttacher = new PhotoViewAttacher(meizhi);
         Glide.with(this)
-                .load(mUrl)
+                .load(url)
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
@@ -65,16 +79,29 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
         mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
             @Override
             public void onPhotoTap(View view, float v, float v1) {
-                hideOrShowToolBar();
+                toggleSystemUI();
             }
 
             @Override
             public void onOutsidePhotoTap() {
-                hideOrShowToolBar();
+                toggleSystemUI();
 
             }
         });
+
+        setSystemUI();
+
+        setStatueBarColor();
+
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
+            if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                showSystemUI();
+            } else {
+                hideSystemUI();
+            }
+        });
     }
+
 
     @Override
     protected void setUpData() {
@@ -124,9 +151,86 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
                 mPresenter.saveImage(mBitmap, date);
 
             } else {
-                SnackbarUtil.showSnackbar(meizhi, "没有授权");
+                SnackbarUtil.showSnackbar(meizhi, getString(R.string.permission_denied));
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
+
+    private void toggleSystemUI() {
+        if (fullScreenMode) {
+            showSystemUI();
+        } else {
+            hideSystemUI();
+        }
+    }
+
+    private void setSystemUI() {
+        mAppBar.animate()
+                .translationY(Measure.getStatusBarHeight(getResources()))
+                .setInterpolator(new DecelerateInterpolator())
+                .start();
+
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    private void showSystemUI() {
+        runOnUiThread(() -> {
+            mAppBar.animate().translationY(Measure.getStatusBarHeight(getResources())).setInterpolator(new DecelerateInterpolator())
+                    .setDuration(240).start();
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+            fullScreenMode = false;
+            changeBackgroundColor();
+        });
+    }
+
+    private void hideSystemUI() {
+        runOnUiThread(() -> {
+            mAppBar.animate().translationY(-mAppBar.getHeight()).setInterpolator(new AccelerateInterpolator())
+                    .setDuration(240).start();
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
+
+            fullScreenMode = true;
+            changeBackgroundColor();
+        });
+    }
+
+    private void setStatueBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        }
+    }
+
+    private void changeBackgroundColor() {
+        int colorFrom;
+        int colorTo;
+        if (fullScreenMode) {
+            colorFrom = ContextCompat.getColor(this, R.color.white_70);
+            colorTo = ContextCompat.getColor(this, R.color.md_black_1000);
+        } else {
+            colorFrom = ContextCompat.getColor(this, R.color.md_black_1000);
+            colorTo = ContextCompat.getColor(this, R.color.white_70);
+        }
+
+        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        colorAnimation.setDuration(240);
+        colorAnimation.addUpdateListener(animation -> mPhotoBackground.setBackgroundColor((Integer) animation.getAnimatedValue()));
+        colorAnimation.start();
+    }
+
+
 }

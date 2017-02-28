@@ -36,5 +36,6 @@
     <string name="action_search">搜索</string>
     <string name="slogan">每日分享技术干货</string>
     <string name="dot">●</string>
+    <string name="permission_denied">没有授权</string>
 
 </resources>

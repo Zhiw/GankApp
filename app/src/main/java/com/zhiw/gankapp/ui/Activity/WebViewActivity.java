@@ -11,6 +11,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +22,10 @@ import butterknife.Bind;
 
 public class WebViewActivity extends ToolBarActivity implements IWebView {
 
-    @Bind(R.id.web_view) WebView mWebView;
-    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
+    @Bind(R.id.web_view)
+    WebView mWebView;
+    @Bind(R.id.progress_bar)
+    ProgressBar mProgressBar;
 
     private WebViewPresenter mPresenter;
 
@@ -50,7 +53,6 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_web, menu);
@@ -75,6 +77,11 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
                 intent.putExtra(Intent.EXTRA_TEXT, url);
                 startActivity(Intent.createChooser(intent, "分享到"));
                 break;
+            case R.id.action_open_with:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                break;
+
+
         }
         return super.onOptionsItemSelected(item);
     }
