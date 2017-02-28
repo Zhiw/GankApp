@@ -1,5 +1,6 @@
 package com.zhiw.gankapp.adapter;
 
+import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
@@ -66,11 +67,12 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Gank gank = mGankList.get(position);
         if (position == 0) {
-            ((MeizhiViewHolder) holder).mTitleText.setText(gank.getType());
-            
-            ImageLoader.load(context,gank.getUrl(),((MeizhiViewHolder) holder).mImageView);
+            MeizhiViewHolder meizhiViewHolder = (MeizhiViewHolder) holder;
+            meizhiViewHolder.mTitleText.setText(gank.getType());
 
-            ((MeizhiViewHolder) holder).mImageView.setOnClickListener(v -> {
+            ImageLoader.load(context, gank.getUrl(), ((MeizhiViewHolder) holder).mImageView);
+
+            meizhiViewHolder.mImageView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, MeizhiActivity.class);
                 intent.putExtra(Constants.URL, gank.getUrl());
                 intent.putExtra(Constants.DATE, gank.getPublishedAt());
@@ -81,26 +83,30 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             });
 
         } else {
+            GankViewHolder gankViewHolder = (GankViewHolder) holder;
             boolean isTheSameCategory = mGankList.get(position - 1).getType().equals(mGankList.get(position).getType());
             if (isTheSameCategory) {
-                ((GankViewHolder) holder).mCategoryText.setVisibility(View.GONE);
+                gankViewHolder.mCategoryText.setVisibility(View.GONE);
             } else {
-                ((GankViewHolder) holder).mCategoryText.setVisibility(View.VISIBLE);
+                gankViewHolder.mCategoryText.setVisibility(View.VISIBLE);
 
             }
-            ((GankViewHolder) holder).mCategoryText.setText(gank.getType());
+            gankViewHolder.mCategoryText.setText(gank.getType());
 
             if (gank.getImages().size() > 0) {
-                ImageLoader.load(context, gank.getImages().get(0), ((GankViewHolder) holder).mImage);
+                gankViewHolder.mImage.setVisibility(View.VISIBLE);
+                ImageLoader.load(context, gank.getImages().get(0), gankViewHolder.mImage);
+            } else {
+                gankViewHolder.mImage.setVisibility(View.GONE);
             }
 
             String who = "(" + gank.getWho() + ")";
             SpannableString spannableString = new SpannableString(who);
             spannableString.setSpan(new TextAppearanceSpan(context, R.style.ViaTextAppearance), 0, who.length(), 0);
             SpannableStringBuilder builder = new SpannableStringBuilder(gank.getDesc()).append(spannableString);
-            ((GankViewHolder) holder).mTitleText.setText(builder.subSequence(0, builder.length()));
+            gankViewHolder.mTitleText.setText(builder.subSequence(0, builder.length()));
 
-            ((GankViewHolder) holder).mTitleText.setOnClickListener(v -> {
+            gankViewHolder.mTitleText.setOnClickListener(v -> {
                 Intent intent = new Intent(context, WebViewActivity.class);
                 intent.putExtra(Constants.URL, gank.getUrl());
                 intent.putExtra(Constants.DES, gank.getDesc());
@@ -148,8 +154,10 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.meizhi) ImageView mImageView;
-        @Bind(R.id.gank_title) TextView mTitleText;
+        @Bind(R.id.meizhi)
+        ImageView mImageView;
+        @Bind(R.id.gank_title)
+        TextView mTitleText;
 
         public MeizhiViewHolder(View itemView) {
             super(itemView);
