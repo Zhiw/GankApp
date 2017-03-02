@@ -49,8 +49,8 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     PhotoViewAttacher mAttacher;
     private Bitmap mBitmap;
 
-    private String date;
-    private boolean fullScreenMode;
+    private String mDate;
+    private boolean mIsFull;
 
 
     @Override
@@ -61,7 +61,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     @Override
     protected void setUpView() {
         String url = getIntent().getStringExtra(Constants.URL);
-        date = DateUtil.parseDate(getIntent().getStringExtra(Constants.DATE));
+        mDate = DateUtil.parseDate(getIntent().getStringExtra(Constants.DATE));
 
         mAttacher = new PhotoViewAttacher(meizhi);
         Glide.with(this)
@@ -122,14 +122,14 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_STORAGE);
                 } else {
-                    mPresenter.downloadImage(mBitmap, date, 0);
+                    mPresenter.downloadImage(mBitmap, mDate, 0);
                 }
                 break;
             case R.id.action_share:
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_WRITE_STORAGE);
                 } else {
-                    mPresenter.downloadImage(mBitmap, date, 1);
+                    mPresenter.downloadImage(mBitmap, mDate, 1);
                 }
 //                mPresenter.shareImage(mUrl);
                 break;
@@ -148,7 +148,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CODE_WRITE_STORAGE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mPresenter.saveImage(mBitmap, date);
+                mPresenter.saveImage(mBitmap, mDate);
 
             } else {
                 SnackbarUtil.showSnackbar(meizhi, getString(R.string.permission_denied));
@@ -159,7 +159,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
 
     private void toggleSystemUI() {
-        if (fullScreenMode) {
+        if (mIsFull) {
             showSystemUI();
         } else {
             hideSystemUI();
@@ -186,7 +186,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            fullScreenMode = false;
+            mIsFull = false;
             changeBackgroundColor();
         });
     }
@@ -204,7 +204,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                             | View.SYSTEM_UI_FLAG_IMMERSIVE);
 
-            fullScreenMode = true;
+            mIsFull = true;
             changeBackgroundColor();
         });
     }
@@ -218,7 +218,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     private void changeBackgroundColor() {
         int colorFrom;
         int colorTo;
-        if (fullScreenMode) {
+        if (mIsFull) {
             colorFrom = ContextCompat.getColor(this, R.color.white_70);
             colorTo = ContextCompat.getColor(this, R.color.md_black_1000);
         } else {

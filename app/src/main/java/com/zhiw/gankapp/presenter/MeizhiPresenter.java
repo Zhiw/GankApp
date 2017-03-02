@@ -50,14 +50,15 @@ public class MeizhiPresenter extends BasePresenter<MeizhiView> {
 
         if (action == 0) {
             observable.subscribe(file -> {
-                Intent i = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file));
-                context.sendBroadcast(i);
-                viewImpl.showImageResult("图片保存成功");
+                        Intent i = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file));
+                        context.sendBroadcast(i);
+                        viewImpl.showImageResult("图片保存成功");
 
-            }, throwable -> {
-                Logger.e(throwable.getMessage());
+                    }
+                    , throwable -> {
+                        Logger.e(throwable.getMessage());
 
-            });
+                    });
         } else if (action == 1) {
             observable.subscribe(file -> {
                 ShareUtil.shareImage(context, Uri.fromFile(file), "分享妹纸");
