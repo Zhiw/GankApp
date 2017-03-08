@@ -19,7 +19,6 @@ import java.io.FileNotFoundException;
 import java.util.concurrent.ExecutionException;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -35,15 +34,12 @@ public class MeizhiPresenter extends BasePresenter<MeizhiView> {
     }
 
     public void downloadImage(Bitmap bitmap, String name, int action) {
-        Observable<File> observable = Observable.create(new Observable.OnSubscribe<File>() {
-            @Override
-            public void call(Subscriber<? super File> subscriber) {
-                File file = FileUtil.saveBitmap(bitmap, name);
-                if (!file.exists()) {
-                    subscriber.onError(new Exception("save image failed"));
-                } else {
-                    subscriber.onNext(file);
-                }
+        Observable<File> observable = Observable.create((Observable.OnSubscribe<File>) subscriber -> {
+            File file = FileUtil.saveBitmap(bitmap, name);
+            if (!file.exists()) {
+                subscriber.onError(new Exception("save image failed"));
+            } else {
+                subscriber.onNext(file);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -67,15 +63,12 @@ public class MeizhiPresenter extends BasePresenter<MeizhiView> {
     }
 
     public void saveImage(Bitmap bitmap, String name) {
-        Observable.create(new Observable.OnSubscribe<File>() {
-            @Override
-            public void call(Subscriber<? super File> subscriber) {
-                File file = FileUtil.saveBitmap(bitmap, name);
-                if (!file.exists()) {
-                    subscriber.onError(new Exception("save image failed"));
-                } else {
-                    subscriber.onNext(file);
-                }
+        Observable.create((Observable.OnSubscribe<File>) subscriber -> {
+            File file = FileUtil.saveBitmap(bitmap, name);
+            if (!file.exists()) {
+                subscriber.onError(new Exception("save image failed"));
+            } else {
+                subscriber.onNext(file);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -98,18 +91,15 @@ public class MeizhiPresenter extends BasePresenter<MeizhiView> {
     }
 
     public void shareImage(Bitmap bitmap, String name) {
-        Observable.create(new Observable.OnSubscribe<File>() {
-            @Override
-            public void call(Subscriber<? super File> subscriber) {
-                File file = FileUtil.saveCacheFile(context, bitmap, name);
-                if (!file.exists()) {
-                    subscriber.onError(new Exception("failed"));
-                } else {
-                    subscriber.onNext(file);
-                }
-
-
+        Observable.create((Observable.OnSubscribe<File>) subscriber -> {
+            File file = FileUtil.saveCacheFile(context, bitmap, name);
+            if (!file.exists()) {
+                subscriber.onError(new Exception("failed"));
+            } else {
+                subscriber.onNext(file);
             }
+
+
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(file -> {
@@ -118,21 +108,18 @@ public class MeizhiPresenter extends BasePresenter<MeizhiView> {
     }
 
     public void shareImage(String url) {
-        Observable.create(new Observable.OnSubscribe<File>() {
-            @Override
-            public void call(Subscriber<? super File> subscriber) {
-                FutureTarget<File> target = Glide.with(context)
-                        .load(url)
-                        .downloadOnly(300, 300);
+        Observable.create((Observable.OnSubscribe<File>) subscriber -> {
+            FutureTarget<File> target = Glide.with(context)
+                    .load(url)
+                    .downloadOnly(300, 300);
 
-                try {
-                    File cacheFile = target.get();
-                    subscriber.onNext(cacheFile);
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-
+            try {
+                File cacheFile = target.get();
+                subscriber.onNext(cacheFile);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
             }
+
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(file -> {

@@ -39,7 +39,7 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.0'
     compile 'io.reactivex:rxjava:1.1.5'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.orhanobut:logger:1.12'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.chrisbanes:PhotoView:1.2.6'
@@ -48,8 +48,7 @@ dependencies {
     tasks.whenTaskAdded(new Action<Task>() {
         @Override
         void execute(Task task) {
-            if (task.name.contains("lint")//如果instant run不生效，把clean这行干掉
-                    // 项目中有用到aidl则不可以舍弃这个任务
+            if (task.name.contains("lint")// 项目中有用到aidl则不可以舍弃这个任务
                     || task.name.contains("Aidl")//用不到测试的时候就可以先关闭
                     || task.name.contains("mockableAndroidJar")
                     || task.name.contains("UnitTest")

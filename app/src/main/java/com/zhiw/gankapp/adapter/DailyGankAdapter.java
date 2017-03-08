@@ -1,6 +1,5 @@
 package com.zhiw.gankapp.adapter;
 
-import com.orhanobut.logger.Logger;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.config.Constants;
 import com.zhiw.gankapp.model.Gank;
