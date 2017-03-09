@@ -40,7 +40,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     @Bind(R.id.app_bar)
     AppBarLayout mAppBar;
     @Bind(R.id.meizhi)
-    ImageView meizhi;
+    ImageView mImageView;
     @Bind(R.id.photo_layout)
     LinearLayout mPhotoBackground;
 
@@ -51,6 +51,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     private String mDate;
     private boolean mIsFull;
+    private String mImageUrl;
 
 
     @Override
@@ -60,17 +61,33 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     @Override
     protected void setUpView() {
-        String url = getIntent().getStringExtra(Constants.URL);
+        mImageUrl = getIntent().getStringExtra(Constants.URL);
         mDate = DateUtil.parseDate(getIntent().getStringExtra(Constants.DATE));
 
-        mAttacher = new PhotoViewAttacher(meizhi);
+        setupPhotoAttacher();
+
+        setSystemUI();
+
+        setStatueBarColor();
+
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
+            if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                showSystemUI();
+            } else {
+                hideSystemUI();
+            }
+        });
+    }
+
+    private void setupPhotoAttacher() {
+        mAttacher = new PhotoViewAttacher(mImageView);
         Glide.with(this)
-                .load(url)
+                .load(mImageUrl)
                 .asBitmap()
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        meizhi.setImageBitmap(resource);
+                        mImageView.setImageBitmap(resource);
                         mAttacher.update();
                         mBitmap = resource;
                     }
@@ -86,18 +103,6 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
             public void onOutsidePhotoTap() {
                 toggleSystemUI();
 
-            }
-        });
-
-        setSystemUI();
-
-        setStatueBarColor();
-
-        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
-            if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                showSystemUI();
-            } else {
-                hideSystemUI();
             }
         });
     }
@@ -140,7 +145,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     @Override
     public void showImageResult(String text) {
-        SnackbarUtil.showSnackbar(meizhi, text);
+        SnackbarUtil.showSnackbar(mImageView, text);
 
     }
 
@@ -151,12 +156,26 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
                 mPresenter.saveImage(mBitmap, mDate);
 
             } else {
-                SnackbarUtil.showSnackbar(meizhi, getString(R.string.permission_denied));
+                SnackbarUtil.showSnackbar(mImageView, getString(R.string.permission_denied));
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAttacher.cleanup();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mIsFull) {
+            showSystemUI();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     private void toggleSystemUI() {
         if (mIsFull) {

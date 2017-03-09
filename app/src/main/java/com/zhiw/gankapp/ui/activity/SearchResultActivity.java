@@ -23,6 +23,8 @@ import rx.schedulers.Schedulers;
 
 public class SearchResultActivity extends ToolBarActivity {
 
+    public static final String EXTRA_KEYWORD = "keyword";
+
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.recycler_view) MyRecyclerView mRecyclerView;
     @Bind(R.id.progress_bar) ProgressBar mProgressBar;
@@ -36,7 +38,7 @@ public class SearchResultActivity extends ToolBarActivity {
 
     public static void openActivity(Context context, String keyWord) {
         Intent intent = new Intent(context, SearchResultActivity.class);
-        intent.putExtra("keyword", keyWord);
+        intent.putExtra(EXTRA_KEYWORD, keyWord);
         context.startActivity(intent);
 
     }
@@ -49,7 +51,7 @@ public class SearchResultActivity extends ToolBarActivity {
 
     @Override
     protected void setUpView() {
-        mKeyWord = getIntent().getStringExtra("keyword");
+        mKeyWord = getIntent().getStringExtra(EXTRA_KEYWORD);
         mAdapter = new SearchResultAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new RecyclerViewDivider(this));
