@@ -52,11 +52,11 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
     @Override
     public void onBindViewHolder(DailyGankViewHolder holder, int position) {
         Gank gank = mList.get(position);
-        ImageLoader.load(mContext,gank.getUrl(),holder.mMeizhi);
+        ImageLoader.load(mContext,gank.getUrl(),holder.meizhi);
 
-        holder.mDescText.setText(DateUtil.parseDate(gank.getPublishedAt())+"\n"+gank.getDesc());
+        holder.descText.setText(DateUtil.parseDate(gank.getPublishedAt())+"\n"+gank.getDesc());
 
-        holder.mMeizhi.setOnClickListener(v -> {
+        holder.meizhi.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, MeizhiActivity.class);
             intent.putExtra(Constants.URL, gank.getUrl());
             intent.putExtra(Constants.DATE, gank.getPublishedAt());
@@ -66,7 +66,7 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
             ActivityCompat.startActivity(mContext, intent, optionsCompat.toBundle());
         });
 
-        holder.mCardView.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, DailyGankActivity.class);
             intent.putExtra(Constants.DATE,gank.getPublishedAt());
             mContext.startActivity(intent);
@@ -93,9 +93,9 @@ public class DailyGankListAdapter extends RecyclerView.Adapter<DailyGankListAdap
     }
 
     class DailyGankViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.card_view) CardView mCardView;
-        @Bind(R.id.meizhi) ImageView mMeizhi;
-        @Bind(R.id.tv_desc) TextView mDescText;
+        @Bind(R.id.card_view) CardView cardView;
+        @Bind(R.id.meizhi) ImageView meizhi;
+        @Bind(R.id.tv_desc) TextView descText;
 
         DailyGankViewHolder(View itemView) {
             super(itemView);

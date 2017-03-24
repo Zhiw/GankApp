@@ -33,11 +33,11 @@ import butterknife.OnClick;
 public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiViewHolder> {
 
     private List<Gank> mList;
-    private Context context;
+    private Context mContext;
 
     public MeizhiAdapter(Context context) {
         mList = new ArrayList<>();
-        this.context = context;
+        this.mContext = context;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
     public void onBindViewHolder(MeizhiViewHolder holder, int position) {
         Gank gank = mList.get(position);
         holder.view.setTag(gank);
-        ImageLoader.load(context,gank.getUrl(),holder.mImageView);
+        ImageLoader.load(mContext,gank.getUrl(),holder.imageView);
 
 
     }
@@ -75,7 +75,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
 
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.imageView) ImageView mImageView;
+        @Bind(R.id.imageView) ImageView imageView;
 
         View view;
 
@@ -87,13 +87,13 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
 
         @OnClick(R.id.imageView)
         public void onClick() {
-            Intent intent = new Intent(context, MeizhiActivity.class);
+            Intent intent = new Intent(mContext, MeizhiActivity.class);
             intent.putExtra(Constants.URL, ((Gank) view.getTag()).getUrl());
             intent.putExtra(Constants.DATE, ((Gank) view.getTag()).getPublishedAt());
 
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation((Activity) context, mImageView, context.getString(R.string.transition));
-            ActivityCompat.startActivity(context, intent, optionsCompat.toBundle());
+                    .makeSceneTransitionAnimation((Activity) mContext, imageView, mContext.getString(R.string.transition));
+            ActivityCompat.startActivity(mContext, intent, optionsCompat.toBundle());
         }
 
     }

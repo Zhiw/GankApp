@@ -27,14 +27,10 @@ import butterknife.ButterKnife;
 public class AboutActivity extends ToolBarActivity {
 
 
-    @Bind(R.id.toolbar_layout)
-    CollapsingToolbarLayout mToolbarLayout;
-    @Bind(R.id.tv_about_content)
-    TextView mAboutContentText;
-    @Bind(R.id.app_bar)
-    AppBarLayout mAppBar;
-    @Bind(R.id.recycler_view_lib)
-    RecyclerView mLibRecyclerView;
+    @Bind(R.id.toolbar_layout) CollapsingToolbarLayout mToolbarLayout;
+    @Bind(R.id.tv_about_content) TextView mAboutContentText;
+    @Bind(R.id.app_bar) AppBarLayout mAppBar;
+    @Bind(R.id.recycler_view_lib) RecyclerView mLibRecyclerView;
 
     private ArrayMap<String, String> mLibArrayMap;
 

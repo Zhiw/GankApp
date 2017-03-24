@@ -22,14 +22,12 @@ import butterknife.Bind;
 
 public class WebViewActivity extends ToolBarActivity implements IWebView {
 
-    @Bind(R.id.web_view)
-    WebView mWebView;
-    @Bind(R.id.progress_bar)
-    ProgressBar mProgressBar;
+    @Bind(R.id.web_view) WebView mWebView;
+    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
 
     private WebViewPresenter mPresenter;
 
-    private String url;
+    private String mUrl;
 
 
     @Override
@@ -39,7 +37,7 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
 
     @Override
     protected void setUpView() {
-        url = getIntent().getStringExtra(Constants.URL);
+        mUrl = getIntent().getStringExtra(Constants.URL);
         String des = getIntent().getStringExtra(Constants.DES);
         setTitle(des);
     }
@@ -48,7 +46,7 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
     protected void setUpData() {
         mPresenter = new WebViewPresenter(this, this);
         mPresenter.initWebSettings(mWebView);
-        mPresenter.loadWeb(mWebView, url);
+        mPresenter.loadWeb(mWebView, mUrl);
 
     }
 
@@ -67,18 +65,18 @@ public class WebViewActivity extends ToolBarActivity implements IWebView {
                 break;
             case R.id.action_copy:
                 ClipboardManager copy = (ClipboardManager) WebViewActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
-                copy.setPrimaryClip(ClipData.newPlainText(null, url));
+                copy.setPrimaryClip(ClipData.newPlainText(null, mUrl));
                 SnackbarUtil.showSnackbar(mWebView, getString(R.string.url_copy_tip));
                 break;
             case R.id.action_share:
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.url_share));
-                intent.putExtra(Intent.EXTRA_TEXT, url);
+                intent.putExtra(Intent.EXTRA_TEXT, mUrl);
                 startActivity(Intent.createChooser(intent, "分享到"));
                 break;
             case R.id.action_open_with:
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl)));
                 break;
 
 

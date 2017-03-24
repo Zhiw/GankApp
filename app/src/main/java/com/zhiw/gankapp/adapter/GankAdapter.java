@@ -30,10 +30,10 @@ import butterknife.OnClick;
 public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder> {
 
     private List<Gank> mList;
-    private Context context;
+    private Context mContext;
 
     public GankAdapter(Context context, List<Gank> list) {
-        this.context = context;
+        this.mContext = context;
         if (list == null) {
             list = new ArrayList<>();
         }
@@ -50,9 +50,9 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     public void onBindViewHolder(GankViewHolder holder, int position) {
         Gank gank = mList.get(position);
         holder.view.setTag(gank);
-        holder.mTitle.setText(gank.getDesc());
-        holder.mWho.setText(gank.getWho());
-        holder.mDate.setText(DateUtil.parseDate(gank.getPublishedAt()));
+        holder.titleText.setText(gank.getDesc());
+        holder.whoText.setText(gank.getWho());
+        holder.dateText.setText(DateUtil.parseDate(gank.getPublishedAt()));
 
     }
 
@@ -74,10 +74,10 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
 
     class GankViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.linear_layout) LinearLayout mLinearLayout;
-        @Bind(R.id.title) TextView mTitle;
-        @Bind(R.id.who) TextView mWho;
-        @Bind(R.id.date) TextView mDate;
+        @Bind(R.id.linear_layout) LinearLayout linearLayout;
+        @Bind(R.id.title) TextView titleText;
+        @Bind(R.id.who) TextView whoText;
+        @Bind(R.id.date) TextView dateText;
         View view;
 
         public GankViewHolder(View itemView) {
@@ -88,10 +88,10 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
         @OnClick(R.id.linear_layout)
         public void onClick() {
-            Intent intent = new Intent(context, WebViewActivity.class);
+            Intent intent = new Intent(mContext, WebViewActivity.class);
             intent.putExtra(Constants.URL, ((Gank) view.getTag()).getUrl());
             intent.putExtra(Constants.DES,((Gank) view.getTag()).getDesc());
-            context.startActivity(intent);
+            mContext.startActivity(intent);
 
         }
 

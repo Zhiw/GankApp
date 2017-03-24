@@ -39,13 +39,13 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     private List<Gank> mGankList;
-    private Context context;
+    private Context mContext;
 
     private static final int TYPE_MEIZHI = 1;
     private static final int TYPE_GANK = 2;
 
     public DailyGankAdapter(Context context) {
-        this.context = context;
+        this.mContext = context;
         mGankList = new ArrayList<>();
 
     }
@@ -67,49 +67,49 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         Gank gank = mGankList.get(position);
         if (position == 0) {
             MeizhiViewHolder meizhiViewHolder = (MeizhiViewHolder) holder;
-            meizhiViewHolder.mTitleText.setText(gank.getType());
+            meizhiViewHolder.titleText.setText(gank.getType());
 
-            ImageLoader.load(context, gank.getUrl(), ((MeizhiViewHolder) holder).mImageView);
+            ImageLoader.load(mContext, gank.getUrl(), ((MeizhiViewHolder) holder).imageView);
 
-            meizhiViewHolder.mImageView.setOnClickListener(v -> {
-                Intent intent = new Intent(context, MeizhiActivity.class);
+            meizhiViewHolder.imageView.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, MeizhiActivity.class);
                 intent.putExtra(Constants.URL, gank.getUrl());
                 intent.putExtra(Constants.DATE, gank.getPublishedAt());
 
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation((Activity) context, v, context.getString(R.string.transition));
-                ActivityCompat.startActivity(context, intent, optionsCompat.toBundle());
+                        .makeSceneTransitionAnimation((Activity) mContext, v, mContext.getString(R.string.transition));
+                ActivityCompat.startActivity(mContext, intent, optionsCompat.toBundle());
             });
 
         } else {
             GankViewHolder gankViewHolder = (GankViewHolder) holder;
             boolean isTheSameCategory = mGankList.get(position - 1).getType().equals(mGankList.get(position).getType());
             if (isTheSameCategory) {
-                gankViewHolder.mCategoryText.setVisibility(View.GONE);
+                gankViewHolder.categoryText.setVisibility(View.GONE);
             } else {
-                gankViewHolder.mCategoryText.setVisibility(View.VISIBLE);
+                gankViewHolder.categoryText.setVisibility(View.VISIBLE);
 
             }
-            gankViewHolder.mCategoryText.setText(gank.getType());
+            gankViewHolder.categoryText.setText(gank.getType());
 
             if (gank.getImages().size() > 0) {
-                gankViewHolder.mImage.setVisibility(View.VISIBLE);
-                ImageLoader.load(context, gank.getImages().get(0), gankViewHolder.mImage);
+                gankViewHolder.image.setVisibility(View.VISIBLE);
+                ImageLoader.load(mContext, gank.getImages().get(0), gankViewHolder.image);
             } else {
-                gankViewHolder.mImage.setVisibility(View.GONE);
+                gankViewHolder.image.setVisibility(View.GONE);
             }
 
             String who = "(" + gank.getWho() + ")";
             SpannableString spannableString = new SpannableString(who);
-            spannableString.setSpan(new TextAppearanceSpan(context, R.style.ViaTextAppearance), 0, who.length(), 0);
+            spannableString.setSpan(new TextAppearanceSpan(mContext, R.style.ViaTextAppearance), 0, who.length(), 0);
             SpannableStringBuilder builder = new SpannableStringBuilder(gank.getDesc()).append(spannableString);
-            gankViewHolder.mTitleText.setText(builder.subSequence(0, builder.length()));
+            gankViewHolder.titleText.setText(builder.subSequence(0, builder.length()));
 
-            gankViewHolder.mTitleText.setOnClickListener(v -> {
-                Intent intent = new Intent(context, WebViewActivity.class);
+            gankViewHolder.titleText.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, WebViewActivity.class);
                 intent.putExtra(Constants.URL, gank.getUrl());
                 intent.putExtra(Constants.DES, gank.getDesc());
-                context.startActivity(intent);
+                mContext.startActivity(intent);
             });
 
         }
@@ -154,9 +154,9 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.meizhi)
-        ImageView mImageView;
+        ImageView imageView;
         @Bind(R.id.gank_title)
-        TextView mTitleText;
+        TextView titleText;
 
         public MeizhiViewHolder(View itemView) {
             super(itemView);
@@ -166,12 +166,9 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class GankViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_category)
-        TextView mCategoryText;
-        @Bind(R.id.tv_title)
-        TextView mTitleText;
-        @Bind(R.id.image)
-        ImageView mImage;
+        @Bind(R.id.tv_category) TextView categoryText;
+        @Bind(R.id.tv_title) TextView titleText;
+        @Bind(R.id.image) ImageView image;
 
         public GankViewHolder(View itemView) {
             super(itemView);

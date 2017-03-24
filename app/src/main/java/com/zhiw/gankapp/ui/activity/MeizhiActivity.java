@@ -37,12 +37,9 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     private static final int REQUEST_CODE_WRITE_STORAGE = 757;
 
-    @Bind(R.id.app_bar)
-    AppBarLayout mAppBar;
-    @Bind(R.id.meizhi)
-    ImageView mImageView;
-    @Bind(R.id.photo_layout)
-    LinearLayout mPhotoBackground;
+    @Bind(R.id.app_bar) AppBarLayout mAppBar;
+    @Bind(R.id.meizhi) ImageView mImageView;
+    @Bind(R.id.photo_layout) LinearLayout mPhotoBackground;
 
 
     MeizhiPresenter mPresenter;

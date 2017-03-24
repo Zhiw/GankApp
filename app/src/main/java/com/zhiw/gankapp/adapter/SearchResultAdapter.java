@@ -52,9 +52,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         SpannableString spannableString = new SpannableString(type);
         spannableString.setSpan(new TextAppearanceSpan(mContext, R.style.ViaTextAppearance), 0, type.length(), 0);
         SpannableStringBuilder builder = new SpannableStringBuilder(searchResult.getDesc()).append(spannableString);
-        holder.mTitleText.setText(builder.subSequence(0, builder.length()));
+        holder.titleText.setText(builder.subSequence(0, builder.length()));
 
-        holder.mTitleText.setOnClickListener(view -> {
+        holder.titleText.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, WebViewActivity.class);
             intent.putExtra(Constants.URL, searchResult.getUrl());
             intent.putExtra(Constants.DES, searchResult.getDesc());
@@ -77,8 +77,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
     class ResultViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title)
-        TextView mTitleText;
+        @Bind(R.id.title) TextView titleText;
 
         public ResultViewHolder(View itemView) {
             super(itemView);
