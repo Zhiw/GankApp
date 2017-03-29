@@ -130,8 +130,8 @@ public class AboutActivity extends ToolBarActivity {
 
         @Override
         public void onBindViewHolder(AboutViewHolder holder, int position) {
-            holder.mTextView.setText(" · "+ mLibArrayMap.keyAt(position));
-            holder.mTextView.setOnClickListener(v -> openUrl(mLibArrayMap.valueAt(position)));
+            holder.libText.setText(" · "+ mLibArrayMap.keyAt(position));
+            holder.libText.setOnClickListener(v -> openUrl(mLibArrayMap.valueAt(position)));
         }
 
         @Override
@@ -140,8 +140,7 @@ public class AboutActivity extends ToolBarActivity {
         }
 
         class AboutViewHolder extends RecyclerView.ViewHolder {
-            @Bind(R.id.text_lib)
-            TextView mTextView;
+            @Bind(R.id.text_lib) TextView libText;
 
             public AboutViewHolder(View itemView) {
                 super(itemView);
