@@ -26,7 +26,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -153,9 +153,9 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.meizhi)
+        @BindView(R.id.meizhi)
         ImageView imageView;
-        @Bind(R.id.gank_title)
+        @BindView(R.id.gank_title)
         TextView titleText;
 
         public MeizhiViewHolder(View itemView) {
@@ -166,9 +166,9 @@ public class DailyGankAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class GankViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.tv_category) TextView categoryText;
-        @Bind(R.id.tv_title) TextView titleText;
-        @Bind(R.id.image) ImageView image;
+        @BindView(R.id.tv_category) TextView categoryText;
+        @BindView(R.id.tv_title) TextView titleText;
+        @BindView(R.id.image) ImageView image;
 
         public GankViewHolder(View itemView) {
             super(itemView);

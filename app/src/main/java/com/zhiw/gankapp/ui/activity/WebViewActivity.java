@@ -18,12 +18,12 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class WebViewActivity extends ToolBarActivity implements IWebView {
 
-    @Bind(R.id.web_view) WebView mWebView;
-    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
+    @BindView(R.id.web_view) WebView mWebView;
+    @BindView(R.id.progress_bar) ProgressBar mProgressBar;
 
     private WebViewPresenter mPresenter;
 

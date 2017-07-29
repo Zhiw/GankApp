@@ -4,9 +4,9 @@ import com.zhiw.gankapp.model.DailyGank;
 import com.zhiw.gankapp.model.GankData;
 import com.zhiw.gankapp.model.SearchResponse;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
 
 /**
  * ClassName: GankService

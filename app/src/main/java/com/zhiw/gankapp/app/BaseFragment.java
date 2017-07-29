@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +22,8 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public FragmentActivity fragmentActivity;
 
     private ViewGroup mRootView;
+
+    private Unbinder unbind;
 
 
     public BaseFragment() {
@@ -32,7 +35,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutResId(), container, false);
-        ButterKnife.bind(this, view);
+        unbind = ButterKnife.bind(this, view);
         mRootView = (ViewGroup) view.findViewById(android.R.id.content);
         init();
         setUpView();
@@ -59,7 +62,7 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbind.unbind();
     }
 
     @Override

@@ -12,11 +12,11 @@ import com.zhiw.gankapp.utils.DateUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class DailyGankActivity extends ToolBarActivity implements DailyGankView {
 
-    @Bind(R.id.daily_gank_recyclerview) RecyclerView mDailyGankRecyclerView;
+    @BindView(R.id.daily_gank_recyclerview) RecyclerView mDailyGankRecyclerView;
 
     private DailyGankPresenter mPresenter;
 

@@ -9,13 +9,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public abstract class ToolBarActivity extends BaseActivity implements BaseView {
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.app_bar)
+    @BindView(R.id.app_bar)
     AppBarLayout mAppBar;
 
     private FrameLayout mRootView;

@@ -4,7 +4,8 @@ import com.zhiw.gankapp.model.DailyGank;
 import com.zhiw.gankapp.model.GankData;
 import com.zhiw.gankapp.model.SearchResponse;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * ClassName: GankDataResource

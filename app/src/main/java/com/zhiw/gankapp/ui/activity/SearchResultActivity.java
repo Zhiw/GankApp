@@ -4,7 +4,6 @@ import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.adapter.SearchResultAdapter;
 import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.http.GankDataResource;
-import com.zhiw.gankapp.model.SearchResponse;
 import com.zhiw.gankapp.ui.widget.MyRecyclerView;
 import com.zhiw.gankapp.ui.widget.RecyclerViewDivider;
 
@@ -15,26 +14,29 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.ProgressBar;
 
-import butterknife.Bind;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class SearchResultActivity extends ToolBarActivity {
 
     public static final String EXTRA_KEYWORD = "keyword";
 
-    @Bind(R.id.toolbar) Toolbar mToolbar;
-    @Bind(R.id.recycler_view) MyRecyclerView mRecyclerView;
-    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
-    @Bind(R.id.view_stub) ViewStub mViewStub;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.recycler_view)
+    MyRecyclerView mRecyclerView;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.view_stub)
+    ViewStub mViewStub;
 
     private String mKeyWord;
     private int mPage = 1;
 
     private SearchResultAdapter mAdapter;
-    private Subscription mSubscription;
+    private Disposable mDisposable;
 
     public static void openActivity(Context context, String keyWord) {
         Intent intent = new Intent(context, SearchResultActivity.class);
@@ -68,37 +70,25 @@ public class SearchResultActivity extends ToolBarActivity {
     @Override
     protected void setUpData() {
         mProgressBar.setVisibility(View.VISIBLE);
-        mSubscription = new GankDataResource()
+        mDisposable = new GankDataResource()
                 .search(mKeyWord, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<SearchResponse>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mProgressBar.setVisibility(View.GONE);
-
-                    }
-
-                    @Override
-                    public void onNext(SearchResponse searchResponse) {
-                        mProgressBar.setVisibility(View.GONE);
-                        if (searchResponse.getResults().size() == 0) {
-                            mViewStub.inflate();
-                        }
-                        mAdapter.refreshData(searchResponse.getResults());
-
-                    }
-                });
+                .subscribe(
+                        searchResponse -> {
+                            mProgressBar.setVisibility(View.GONE);
+                            if (searchResponse.getResults().size() == 0) {
+                                mViewStub.inflate();
+                            }
+                            mAdapter.refreshData(searchResponse.getResults());
+                        },
+                        throwable -> mProgressBar.setVisibility(View.GONE));
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSubscription.unsubscribe();
+        mDisposable.dispose();
     }
 }

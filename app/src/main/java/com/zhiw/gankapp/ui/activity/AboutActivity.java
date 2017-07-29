@@ -21,16 +21,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AboutActivity extends ToolBarActivity {
 
 
-    @Bind(R.id.toolbar_layout) CollapsingToolbarLayout mToolbarLayout;
-    @Bind(R.id.tv_about_content) TextView mAboutContentText;
-    @Bind(R.id.app_bar) AppBarLayout mAppBar;
-    @Bind(R.id.recycler_view_lib) RecyclerView mLibRecyclerView;
+    @BindView(R.id.toolbar_layout) CollapsingToolbarLayout mToolbarLayout;
+    @BindView(R.id.tv_about_content) TextView mAboutContentText;
+    @BindView(R.id.app_bar) AppBarLayout mAppBar;
+    @BindView(R.id.recycler_view_lib) RecyclerView mLibRecyclerView;
 
     private ArrayMap<String, String> mLibArrayMap;
 
@@ -140,7 +140,7 @@ public class AboutActivity extends ToolBarActivity {
         }
 
         class AboutViewHolder extends RecyclerView.ViewHolder {
-            @Bind(R.id.text_lib) TextView libText;
+            @BindView(R.id.text_lib) TextView libText;
 
             public AboutViewHolder(View itemView) {
                 super(itemView);

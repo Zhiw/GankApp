@@ -13,7 +13,7 @@ import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,8 +21,8 @@ import butterknife.Bind;
 public class CategoryFragment extends BaseFragment {
 
 
-    @Bind(R.id.tab_layout) TabLayout mTabLayout;
-    @Bind(R.id.view_pager) ViewPager mViewPager;
+    @BindView(R.id.tab_layout) TabLayout mTabLayout;
+    @BindView(R.id.view_pager) ViewPager mViewPager;
 
 
     private String[] titles = {"福利", "Android", "iOS", "前端", "休息视频"};

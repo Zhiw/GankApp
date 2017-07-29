@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,9 +32,9 @@ import butterknife.Bind;
 public class MainFragment extends BaseTabFragment implements MainFragmentView, SwipeRefreshLayout.OnRefreshListener {
     private static final String ARG_PARAM = "title";
 
-    @Bind(R.id.recycler_view) MyRecyclerView mRecyclerView;
-    @Bind(R.id.swipe_refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
+    @BindView(R.id.recycler_view) MyRecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.progress_bar) ProgressBar mProgressBar;
 
     private String type;
     private MainFragmentPresenter mPresenter;

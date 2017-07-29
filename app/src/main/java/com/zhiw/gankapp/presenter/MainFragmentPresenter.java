@@ -9,9 +9,10 @@ import com.zhiw.gankapp.ui.view.MainFragmentView;
 
 import android.content.Context;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * ClassName: MainFragmentPresenter
@@ -32,10 +33,11 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
         mGankApi.getGank(Constants.TYPE_MEIZHI, Constants.COUNT, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<GankData>() {
+                .subscribe(new DisposableObserver<GankData>() {
                     @Override
-                    public void onCompleted() {
-
+                    public void onNext(GankData gankData) {
+                        viewImpl.showProgress(false);
+                        viewImpl.showListView(gankData.getResults());
                     }
 
                     @Override
@@ -44,9 +46,8 @@ public class MainFragmentPresenter extends BasePresenter<MainFragmentView> {
                     }
 
                     @Override
-                    public void onNext(GankData gankData) {
-                        viewImpl.showProgress(false);
-                        viewImpl.showListView(gankData.getResults());
+                    public void onComplete() {
+
                     }
                 });
 

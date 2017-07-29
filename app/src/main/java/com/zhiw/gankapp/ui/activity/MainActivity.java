@@ -25,14 +25,14 @@ import android.widget.SearchView;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar) Toolbar mToolbar;
-    @Bind(R.id.nav_view) NavigationView mNavView;
-    @Bind(R.id.drawer_layout) DrawerLayout mDrawerLayout;
+    @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.nav_view) NavigationView mNavView;
+    @BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
 
     private Fragment mCurrentFragment;
     private FragmentManager mFragmentManager;

@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,8 +25,8 @@ import butterknife.Bind;
  */
 public class DailyFragment extends BaseFragment implements DailyListView {
 
-    @Bind(R.id.recycler_view) MyRecyclerView mRecyclerView;
-    @Bind(R.id.progress_bar) ProgressBar mProgressBar;
+    @BindView(R.id.recycler_view) MyRecyclerView mRecyclerView;
+    @BindView(R.id.progress_bar) ProgressBar mProgressBar;
 
     private DailyListPresenter mPresenter;
     private DailyGankListAdapter mAdapter;

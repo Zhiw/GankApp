@@ -3,6 +3,8 @@ package com.zhiw.gankapp.ui.activity;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.github.chrisbanes.photoview.OnPhotoTapListener;
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import com.zhiw.gankapp.R;
 import com.zhiw.gankapp.app.ToolBarActivity;
 import com.zhiw.gankapp.config.Constants;
@@ -30,16 +32,18 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import butterknife.Bind;
-import uk.co.senab.photoview.PhotoViewAttacher;
+import butterknife.BindView;
 
 public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     private static final int REQUEST_CODE_WRITE_STORAGE = 757;
 
-    @Bind(R.id.app_bar) AppBarLayout mAppBar;
-    @Bind(R.id.meizhi) ImageView mImageView;
-    @Bind(R.id.photo_layout) LinearLayout mPhotoBackground;
+    @BindView(R.id.app_bar)
+    AppBarLayout mAppBar;
+    @BindView(R.id.meizhi)
+    ImageView mImageView;
+    @BindView(R.id.photo_layout)
+    LinearLayout mPhotoBackground;
 
 
     MeizhiPresenter mPresenter;
@@ -90,16 +94,10 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
                     }
                 });
 
-        mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+        mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
-            public void onPhotoTap(View view, float v, float v1) {
+            public void onPhotoTap(ImageView view, float x, float y) {
                 toggleSystemUI();
-            }
-
-            @Override
-            public void onOutsidePhotoTap() {
-                toggleSystemUI();
-
             }
         });
     }
@@ -162,7 +160,7 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mAttacher.cleanup();
+//        mAttacher.cleanup();
     }
 
     @Override

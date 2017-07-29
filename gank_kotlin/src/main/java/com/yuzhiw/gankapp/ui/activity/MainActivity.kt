@@ -1,9 +1,10 @@
-package com.yuzhiw.gankapp
+package com.yuzhiw.gankapp.ui.activity
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
+import com.yuzhiw.gankapp.R
 
 class MainActivity : AppCompatActivity() {
 

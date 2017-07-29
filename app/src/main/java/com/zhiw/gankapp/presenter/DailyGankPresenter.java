@@ -8,9 +8,9 @@ import com.zhiw.gankapp.ui.view.DailyGankView;
 
 import android.content.Context;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * ClassName: DailyGankPresenter
@@ -35,9 +35,10 @@ public class DailyGankPresenter extends BasePresenter<DailyGankView> {
         mGankApi.getDailyData(year, month, day)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DailyGank>() {
+                .subscribe(new DisposableObserver<DailyGank>() {
                     @Override
-                    public void onCompleted() {
+                    public void onNext(DailyGank dailyGank) {
+                        viewImpl.refreshUI(dailyGank.getResults());
 
                     }
 
@@ -47,8 +48,7 @@ public class DailyGankPresenter extends BasePresenter<DailyGankView> {
                     }
 
                     @Override
-                    public void onNext(DailyGank dailyGank) {
-                        viewImpl.refreshUI(dailyGank.getResults());
+                    public void onComplete() {
 
                     }
                 });

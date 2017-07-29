@@ -19,7 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -77,7 +77,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
     class ResultViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title) TextView titleText;
+        @BindView(R.id.title) TextView titleText;
 
         public ResultViewHolder(View itemView) {
             super(itemView);

@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -75,7 +75,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.MeizhiView
 
 
     class MeizhiViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.imageView) ImageView imageView;
+        @BindView(R.id.imageView) ImageView imageView;
 
         View view;
 

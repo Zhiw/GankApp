@@ -8,7 +8,7 @@ import com.zhiw.gankapp.ui.view.IWebView;
 
 import android.webkit.WebView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * ClassName: ReadingFragment
@@ -19,7 +19,7 @@ import butterknife.Bind;
 public class ReadingFragment extends BaseFragment implements IWebView {
 
 
-    @Bind(R.id.web_view_reading) WebView mReadingWebView;
+    @BindView(R.id.web_view_reading) WebView mReadingWebView;
 
     private WebViewPresenter mPresenter;
 

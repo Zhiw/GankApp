@@ -9,10 +9,11 @@ import com.zhiw.gankapp.ui.view.DailyListView;
 
 import android.content.Context;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * ClassName: DailyListPresenter
@@ -36,9 +37,9 @@ public class DailyListPresenter extends BasePresenter<DailyListView> {
                 this::getDataFromMeizhiAndVideo)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<GankData>() {
+                .subscribe(new DisposableObserver<GankData>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 

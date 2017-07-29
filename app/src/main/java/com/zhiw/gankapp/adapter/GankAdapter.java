@@ -18,7 +18,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -74,10 +74,10 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
 
     class GankViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.linear_layout) LinearLayout linearLayout;
-        @Bind(R.id.title) TextView titleText;
-        @Bind(R.id.who) TextView whoText;
-        @Bind(R.id.date) TextView dateText;
+        @BindView(R.id.linear_layout) LinearLayout linearLayout;
+        @BindView(R.id.title) TextView titleText;
+        @BindView(R.id.who) TextView whoText;
+        @BindView(R.id.date) TextView dateText;
         View view;
 
         public GankViewHolder(View itemView) {
