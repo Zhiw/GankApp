@@ -194,8 +194,11 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     private void showSystemUI() {
         runOnUiThread(() -> {
-            mAppBar.animate().translationY(Measure.getStatusBarHeight(getResources())).setInterpolator(new DecelerateInterpolator())
-                    .setDuration(240).start();
+            mAppBar.animate()
+                    .translationY(Measure.getStatusBarHeight(getResources()))
+                    .setInterpolator(new DecelerateInterpolator())
+                    .setDuration(240)
+                    .start();
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -207,8 +210,11 @@ public class MeizhiActivity extends ToolBarActivity implements MeizhiView {
 
     private void hideSystemUI() {
         runOnUiThread(() -> {
-            mAppBar.animate().translationY(-mAppBar.getHeight()).setInterpolator(new AccelerateInterpolator())
-                    .setDuration(240).start();
+            mAppBar.animate()
+                    .translationY(-mAppBar.getHeight())
+                    .setInterpolator(new AccelerateInterpolator())
+                    .setDuration(240)
+                    .start();
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
