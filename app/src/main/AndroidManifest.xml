@@ -1,54 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.zhiw.gankapp">
+    package="com.zhiw.gankapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-            android:name=".App"
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:resizeableActivity="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"
-            android:supportsRtl="true"
-            android:resizeableActivity="true"
-            android:theme="@style/AppTheme">
+            android:screenOrientation="portrait"/>
         <activity
-                android:name=".ui.activity.MainActivity"
-                android:screenOrientation="portrait"
-                android:label="@string/app_name">
-        </activity>
-        <activity android:name=".ui.activity.MeizhiActivity"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/AppTheme.NoActionBar"
-        >
-        </activity>
-        <activity android:name=".ui.activity.WebViewActivity"
-                  android:screenOrientation="portrait"
-        >
-        </activity>
+            android:name=".ui.activity.MeizhiActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-                android:name=".ui.activity.DailyGankActivity"
-                android:screenOrientation="portrait"
-                android:label="@string/title_activity_daily_gank">
-        </activity>
+            android:name=".ui.activity.WebViewActivity"
+            android:screenOrientation="portrait"/>
         <activity
-                android:name=".ui.activity.AboutActivity"
-                android:screenOrientation="portrait"
-                android:label="@string/title_activity_about">
-        </activity>
-        <activity android:name=".ui.activity.SplashActivity"
-                  android:screenOrientation="portrait">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
+            android:name=".ui.activity.DailyGankActivity"
+            android:label="@string/title_activity_daily_gank"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
-    </activity>
-    <activity android:name=".ui.activity.SearchResultActivity">
-    </activity>
-</application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.SearchResultActivity"/>
+    </application>
 
-        </manifest>
+</manifest>

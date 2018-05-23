@@ -1,1 +1,1 @@
-include ':app', ':gank_kotlin'
+include ':app'

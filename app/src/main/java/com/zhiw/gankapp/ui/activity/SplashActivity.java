@@ -11,13 +11,13 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.SplashTheme);
+//        setTheme(R.style.SplashTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish();
-        }, 2000);
+//        Handler handler = new Handler();
+//        handler.postDelayed(() -> {
+//        }, 2000);
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        finish();
     }
 }

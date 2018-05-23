@@ -5,8 +5,8 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         applicationId "com.zhiw.gankapp"
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
+        minSdkVersion 19
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
